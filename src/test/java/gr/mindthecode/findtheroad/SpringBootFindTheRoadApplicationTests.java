@@ -1,0 +1,13 @@
+package gr.mindthecode.findtheroad;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SpringBootFindTheRoadApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
