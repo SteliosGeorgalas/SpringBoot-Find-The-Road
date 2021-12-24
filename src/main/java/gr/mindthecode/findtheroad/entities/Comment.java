@@ -8,9 +8,9 @@ public class Comment {
     @Id
     private String id;
 
+    private Person person;
     private String comment;
     private Date date;
-    private int likes;
 
     public String getComment() {
         return comment;
@@ -28,24 +28,12 @@ public class Comment {
         this.date = date;
     }
 
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
     public Comment() {}
 
-    public Comment(String comment, Date date) {
+    public Comment(String comment, Date date, Person person) {
         this.comment = comment;
         this.date = date;
-    }
-    public Comment(String comment, Date date, int likes){
-        this.comment = comment;
-        this.date = date;
-        this.likes = likes;
+        this.person = person;
     }
 
 }
