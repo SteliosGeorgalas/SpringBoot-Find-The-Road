@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection = "person")
-public abstract class Person {
+public class Person {
 
     @Id
     private String id;

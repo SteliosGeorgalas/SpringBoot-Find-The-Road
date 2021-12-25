@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection = "product")
-public abstract class Product { // A generic item class either tangible or intangible. All items have an ID, name, price and description.
+public class Product { // A generic item class either tangible or intangible. All items have an ID, name, price and description.
     //We primarily deal with technology.
 
     @Id
-    private int id;
+    private String id;
 
     private String name;
 
@@ -22,7 +22,9 @@ public abstract class Product { // A generic item class either tangible or intan
 
     private String description;
 
-    private Company company;
+
+    //Possible reworking / maybe even removal
+    private String company;
 
     private List<Comment> commentList;
 
@@ -32,10 +34,11 @@ public abstract class Product { // A generic item class either tangible or intan
         this.description = description;
     }
 
-    public Product(String name, float price, String description, Company company) {
+    public Product(String name, float price, String description, String company) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.company = company;
     }
+
 }
