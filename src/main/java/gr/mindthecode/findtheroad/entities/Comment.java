@@ -1,9 +1,15 @@
 package gr.mindthecode.findtheroad.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@Document(collection = "comment")
 public class Comment {
     @Id
     private String id;
@@ -27,8 +33,6 @@ public class Comment {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public Comment() {}
 
     public Comment(String comment, Date date, Person person) {
         this.comment = comment;

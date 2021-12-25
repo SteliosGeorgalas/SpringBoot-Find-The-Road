@@ -1,11 +1,15 @@
 package gr.mindthecode.findtheroad.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@Document(collection = "product")
 public class DigitalProduct extends Product { // A service is an intangible object such as an antivirus or digital course.
     private int duration;
     private boolean support;

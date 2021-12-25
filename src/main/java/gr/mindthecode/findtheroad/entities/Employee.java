@@ -1,10 +1,14 @@
 package gr.mindthecode.findtheroad.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@Document(collection = "person")
 public class Employee extends Person {
     private String position;
     private String companyPhoneNumber;

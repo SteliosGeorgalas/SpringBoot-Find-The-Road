@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
+
 @Data
 @NoArgsConstructor
 @Document(collection = "person")
@@ -18,6 +21,7 @@ public abstract class Person {
     private int age;
     private String address;
     private String personalPhoneNumber;
+    private List<Comment> commentList;
 
     public Person(String firstName, String lastName, int age, String address, String personalPhoneNumber) {
         this.firstName = firstName;

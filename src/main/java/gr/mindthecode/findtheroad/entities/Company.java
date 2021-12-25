@@ -1,46 +1,40 @@
 package gr.mindthecode.findtheroad.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public abstract class Company {
+@Document(collection = "company")
+public class Company {
     @Id
     private String id;
-
-    @DBRef
-    @JsonManagedReference
-    private ContactDetails contactDetails;
-
-    //    @DBRef
-//    @JsonManagedReference
-    private List<Employee> employeeList;
     private String name;
+    private String email;
+    private String telephoneNumber;
     private String address;
-    private String bio;
+    private String whoWeAre;
     private List<Product> productList;
 
 
-    public Company(ContactDetails contactDetails, String name, String address, String bio, List<Employee> employeeList) {
-        this.contactDetails = contactDetails;
+    public Company(String name, String email, String telephoneNumber, String address, String whoWeAre) {
         this.name = name;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
         this.address = address;
-        this.bio = bio;
-        this.employeeList = employeeList;
+        this.whoWeAre = whoWeAre;
     }
 
-    public Company(ContactDetails contactDetails, String name, String address, String bio) {
-        this.contactDetails = contactDetails;
+    public Company(String id, String name, String email, String telephoneNumber, String address, String whoWeAre) {
+        this.id = id;
         this.name = name;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
         this.address = address;
-        this.bio = bio;
+        this.whoWeAre = whoWeAre;
     }
 }
