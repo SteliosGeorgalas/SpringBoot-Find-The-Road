@@ -5,25 +5,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Document(collection = "person")
 public class Employee extends Person {
-    private String position;
-    private String companyPhoneNumber;
-    private String companyEmail;
+    private boolean teamLeader;
+    private String role;
+    private List<Comment> commentList;
 
     //    @DBRef
 //    @JsonBackReference
-    private Company company;
 
-    public Employee(String firstName, String lastName, int age, String address, String personalPhoneNumber,
-                    String position, String companyPhoneNumber, String companyEmail, Company company) {
-        super(firstName, lastName, age, address, personalPhoneNumber);
-        this.position = position;
-        this.companyPhoneNumber = companyPhoneNumber;
-        this.companyEmail = companyEmail;
-        this.company = company;
+    public Employee(String firstName, String lastName, int age, String address, String phoneNumber,
+                    String email,boolean teamLeader,String role) {
+        super(firstName, lastName, age, address, phoneNumber,email);
+        this.teamLeader = teamLeader;
+        this.role = role;
     }
 }

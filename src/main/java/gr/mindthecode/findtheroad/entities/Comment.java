@@ -14,16 +14,16 @@ public class Comment {
     @Id
     private String id;
 
-    private Person person;
-    private String comment;
+    private Person byWho;   //ποιός έγραψε το σχόλιο
+    private String rating;  //βαθμολογία ή ατεράκια
     private Date date;
 
-    public String getComment() {
-        return comment;
+    public String getRating() {
+        return rating;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public Date getDate() {
@@ -34,10 +34,10 @@ public class Comment {
         this.date = date;
     }
 
-    public Comment(String comment, Date date, Person person) {
-        this.comment = comment;
+    public Comment(String rating, Date date, Person byWho) {
+        this.rating = rating;
         this.date = date;
-        this.person = person;
+        this.byWho = byWho;
     }
 
 }

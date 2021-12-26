@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "person")
 public class Customer extends Person {
-    // Freelancer or not
-    // private String type = "Free-lancer";
-    private List<Product> cart;
+
+    private List<Project> project;
 }
