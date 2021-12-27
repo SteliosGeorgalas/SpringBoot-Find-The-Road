@@ -1,15 +1,16 @@
 package gr.mindthecode.findtheroad.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Document(collection = "project")
 public class Project { // A generic item class either tangible or intangible. All items have an ID, name, price and description.
@@ -18,27 +19,25 @@ public class Project { // A generic item class either tangible or intangible. Al
     @Id
     private String id;
 
-    private String name;        //or title
-    private float price;
+    double price;
     private String description;
+    private String title;
+    private Date dueDate;
 
-//    @ManyToMany
+    //    @ManyToMany
 //    @JoinTable(
 //            name = "PROJECT_TEAM",
 //            joinColumns = @JoinColumn(name = "project_id"),
 //            inverseJoinColumns = @JoinColumn(name = "team_id"))
 //    @JsonManagedReference
-    private List<Team> team;
+    private List<Team> team; // The list of teams currently working on the project.
+    private Customer customer; // The customer who requested the project.
 
-    private Customer customer;
 
-
-    public Project(String name, float price, String description, Customer customer ) {
-        this.name = name;
-        this.price = price;
+    public Project(String title, String description, Customer customer) {
+        this.title = title;
         this.description = description;
-        this.customer=customer;
+        this.customer = customer;
     }
-
 
 }

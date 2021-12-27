@@ -1,13 +1,15 @@
 package gr.mindthecode.findtheroad.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Document(collection = "comment")
 public class Comment {
@@ -15,24 +17,9 @@ public class Comment {
     private String id;
 
     private Person byWho;   //ποιός έγραψε το σχόλιο
-    private String rating;  //βαθμολογία ή ατεράκια
+    private String rating;  //βαθμολογία ή αστεράκια
     private Date date;
 
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public Comment(String rating, Date date, Person byWho) {
         this.rating = rating;

@@ -3,6 +3,7 @@ package gr.mindthecode.findtheroad.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -11,7 +12,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Document(collection = "person")
+@TypeAlias("customer")
 public class Customer extends Person {
+    private List<Project> projectList;
 
-    private List<Project> project;
+    public Customer(String firstName, String lastName, int age, String address, String phoneNumber,
+                    String email, String role) {
+        super(firstName, lastName, age, address, phoneNumber, email);
+    }
+
 }
