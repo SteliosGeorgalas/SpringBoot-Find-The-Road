@@ -19,7 +19,7 @@ public class Project { // A generic item class either tangible or intangible. Al
     @Id
     private String id;
 
-    double price;
+    float price;
     private String description;
     private String title;
     private Date dueDate;
@@ -33,11 +33,15 @@ public class Project { // A generic item class either tangible or intangible. Al
     private List<Team> team; // The list of teams currently working on the project.
     private Customer customer; // The customer who requested the project.
 
-
     public Project(String title, String description, Customer customer) {
         this.title = title;
         this.description = description;
         this.customer = customer;
+    }
+
+    public Project(String title, String description, float price, Date date) {
+        this.title = title;
+        this.description = description;
     }
 
 }

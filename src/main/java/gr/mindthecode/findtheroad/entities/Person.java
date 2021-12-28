@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @Document(collection = "person")
-public abstract class Person {
+public class Person {
 
     @Id
     private String id;
@@ -22,7 +22,8 @@ public abstract class Person {
     private String email;
     private String personalPhoneNumber; //personalPhoneNumber to phoneNumber, εφόσον είμαστε μέσα στο περιβάλλον μιας εταιρείας
 
-    public Person(String firstName, String lastName, int age, String address, String email, String personalPhoneNumber) {
+    public Person(String firstName, String lastName, int age, String address,
+                  String email, String personalPhoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

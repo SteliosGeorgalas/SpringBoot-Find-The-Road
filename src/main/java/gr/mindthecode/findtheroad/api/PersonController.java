@@ -45,6 +45,7 @@ public class PersonController {
                     match.setLastName(newPerson.getLastName());
                     match.setAge(newPerson.getAge());
                     match.setAddress(newPerson.getAddress());
+                    match.setEmail(newPerson.getEmail());
                     match.setPersonalPhoneNumber(newPerson.getPersonalPhoneNumber());
                     return repository.save(match);
                 })

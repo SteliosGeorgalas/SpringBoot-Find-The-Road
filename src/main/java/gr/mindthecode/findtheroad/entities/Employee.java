@@ -21,9 +21,9 @@ public class Employee extends Person {
     private Team team;
 
 
-    public Employee(String firstName, String lastName, int age, String address, String phoneNumber,
-                    String email, String role) {
-        super(firstName, lastName, age, address, phoneNumber, email);
+    public Employee(String firstName, String lastName, int age, String address, String email,
+                    String personalPhoneNumber, String role) {
+        super(firstName, lastName, age, address, email, personalPhoneNumber);
         this.role = role;
     }
 

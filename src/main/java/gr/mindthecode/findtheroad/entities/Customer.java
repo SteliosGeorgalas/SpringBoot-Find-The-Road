@@ -16,9 +16,9 @@ import java.util.List;
 public class Customer extends Person {
     private List<Project> projectList;
 
-    public Customer(String firstName, String lastName, int age, String address, String phoneNumber,
-                    String email, String role) {
-        super(firstName, lastName, age, address, phoneNumber, email);
+    public Customer(String firstName, String lastName, int age, String address, String email,
+                    String personalPhoneNumber) {
+        super(firstName, lastName, age, address, email, personalPhoneNumber);
     }
 
 }
