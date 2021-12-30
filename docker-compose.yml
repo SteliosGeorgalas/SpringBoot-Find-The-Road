@@ -33,13 +33,3 @@ services:
     volumes:
       - ./mongodb/data/:/data/db
       - ./mongodb/log/:/var/log/mongodb
-
-#  mongo-client:
-#    image: mongoclient/mongoclient:4.0.0
-#    ports:
-#      - "3030:3000"
-#    environment:
-#      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://mongo:27017
-#    links:
-#      - mongo
-
