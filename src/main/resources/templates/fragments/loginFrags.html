@@ -7,8 +7,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <script th:src="@{/js/login.js}"></script>
-    <link th:href="@{/css/login.css}" rel="stylesheet"></link>
+    <script th:src="@{/js/main.js}"></script>
+    <link th:href="@{/css/main.css}" rel="stylesheet"></link>
     <title>Title</title>
 </head>
 
@@ -72,7 +72,7 @@
         <div class="tabs-content">
             <!-- TABS CONTENT LOGIN -->
             <div id="login-tab-content" class="active">
-                <form class="login-form" th:action="@{/login}" method="post">
+                <form class="login-form" th:action="@{/home}" method="post">
                     <input type="text" class="input" name="username" autocomplete="off"
                            placeholder="Email or Username">
                     <input type="password" class="input" name="password" autocomplete="off"

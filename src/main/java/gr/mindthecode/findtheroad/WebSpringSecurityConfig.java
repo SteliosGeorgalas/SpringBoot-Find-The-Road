@@ -24,7 +24,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/home")
                 .defaultSuccessUrl("/home", true)
                 .usernameParameter("username")
                 .passwordParameter("password")
