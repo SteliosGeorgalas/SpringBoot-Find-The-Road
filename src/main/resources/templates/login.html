@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!--    <script th:src="@{/js/login.js}" src="@{/js/login.js}"></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet prefetch'>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+
+    <style class="cp-pen-styles">@import url(https://fonts.googleapis.com/css?family=Raleway:400,100,200,300);
+    </style>
+</head>
+<body>
+<!-- LOGIN MODULE -->
+<div class="login">
+<!--    sec:authorize="isAuthenticated()"-->
+    <div sec:authorize="isAnonymous()">
+        <div class="wrap">
+            <!-- TOGGLE DROPDOWN-->
+            <div id="toggle-wrap" th:include="fragments/loginFrags :: toogleWrap">
+            </div>
+
+            <!-- RECOVERY -->
+            <div class="recovery" th:include="fragments/loginFrags :: recovery">
+            </div>
+
+            <!-- SLIDER -->
+            <div class="content" th:include="fragments/loginFrags :: slider">
+            </div>
+
+            <!-- ABOUT US -->
+            <div class="terms" th:include="fragments/loginFrags :: terms">
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div class="user" th:include="fragments/loginFrags :: loginForm">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>/* TODO LOGIN.JS CANNOT ACCESS REMOTE  */
+// LOGIN TABS
+$(function () {
+    var tab = $('.tabs h3 a');
+    tab.on('click', function (event) {
+        event.preventDefault();
+        tab.removeClass('active');
+        $(this).addClass('active');
+        tab_content = $(this).attr('href');
+        $('div[id$="tab-content"]').removeClass('active');
+        $(tab_content).addClass('active');
+    });
+});
+
+// SLIDESHOW
+$(function () {
+    $('#slideshow > div:gt(0)').hide();
+    setInterval(function () {
+        $('#slideshow > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slideshow');
+    }, 3850);
+});
+
+// CUSTOM JQUERY FUNCTION FOR SWAPPING CLASSES
+(function ($) {
+    'use strict';
+    $.fn.swapClass = function (remove, add) {
+        this.removeClass(remove).addClass(add);
+        return this;
+    };
+}(jQuery));
+
+// SHOW/HIDE PANEL ROUTINE (TODO needs better methods)
+// I'll optimize when time permits.
+$(function () {
+    $('.agree,.forgot, #toggle-terms, .sign-up').on('click', function (event) {
+        event.preventDefault();
+        var terms = $('.terms'),
+            recovery = $('.recovery'),
+            close = $('#toggle-terms'),
+            arrow = $('.tabs-content .fa');
+        if ($(this).hasClass('agree') || $(this).hasClass('log-in') || ($(this).is('#toggle-terms')) && terms.hasClass('open')) {
+            if (terms.hasClass('open')) {
+                terms.swapClass('open', 'closed');
+                close.swapClass('open', 'closed');
+                arrow.swapClass('active', 'inactive');
+            } else {
+                if ($(this).hasClass('log-in')) {
+                    return;
+                }
+                terms.swapClass('closed', 'open').scrollTop(0);
+                close.swapClass('closed', 'open');
+                arrow.swapClass('inactive', 'active');
+            }
+        } else if ($(this).hasClass('forgot') || $(this).hasClass('sign-up') || $(this).is('#toggle-terms')) {
+            if (recovery.hasClass('open')) {
+                recovery.swapClass('open', 'closed');
+                close.swapClass('open', 'closed');
+                arrow.swapClass('active', 'inactive');
+            } else {
+                if ($(this).hasClass('sign-up')) {
+                    return;
+                }
+                recovery.swapClass('closed', 'open');
+                close.swapClass('closed', 'open');
+                arrow.swapClass('inactive', 'active');
+            }
+        }
+    });
+});
+
+// MESSAGES
+$(function () {
+    $('.recovery .button').on('click', function (event) {
+        event.preventDefault();
+        $('.recovery .mssg').addClass('animate');
+        setTimeout(function () {
+            $('.recovery').swapClass('open', 'closed');
+            $('#toggle-terms').swapClass('open', 'closed');
+            $('.tabs-content .fa').swapClass('active', 'inactive');
+            $('.recovery .mssg').removeClass('animate');
+        }, 2500);
+    });
+});
+
+</script>
+</body>
+</html>
