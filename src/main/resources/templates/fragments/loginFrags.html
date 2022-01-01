@@ -7,8 +7,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <script th:src="@{/js/main.js}"></script>
-    <link th:href="@{/css/main.css}" rel="stylesheet"></link>
     <title>Title</title>
 </head>
 
@@ -43,7 +41,7 @@
     <div id="slideshow">
         <div class="one">
             <h2><span>TEST1</span></h2>
-            <p>TEST1TEST1TEST1TEST1TEST1TEST1TEST1TEST1TEST1</p>
+            <p>Find The Road Project </p>
         </div>
         <div class="two">
             <h2><span>TEST2S</span></h2>
@@ -71,22 +69,24 @@
         <!-- TABS CONTENT -->
         <div class="tabs-content">
             <!-- TABS CONTENT LOGIN -->
-            <div id="login-tab-content" class="active">
+            <div id="login-tab-content" class="active" th:with="error = ${param.error}, logout = ${param.logout}">
                 <form class="login-form" th:action="@{/home}" method="post">
                     <input type="text" class="input" name="username" autocomplete="off"
                            placeholder="Email or Username">
                     <input type="password" class="input" name="password" autocomplete="off"
                            placeholder="Password">
-                    <input type="checkbox" class="checkbox" checked name="remember_me"
-                           placeholder="Remember me">
+                    <input type="checkbox" class="checkbox" checked id="remember_me">
+                    <label for="remember_me">Remember me</label>
+                    <div class="help-action" th:if="${error}">
+                        <p>Invalid username or password.</p>
+                    </div>
                     <input type="submit" class="button" value="Login">
                 </form>
+<!--                <div class="help-action">-->
+<!--                    <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="forgot" href="#">Forgot your-->
+<!--                        password?</a></p>-->
+<!--                </div>-->
                 <div class="help-action">
-                    <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="forgot" href="#">Forgot your
-                        password?</a></p>
-                </div>
-                <div class="help-action">
-                    <p>By signing up, you agree to our</p>
                     <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a
                             class="agree" href="#">About US</a></p>
                 </div>

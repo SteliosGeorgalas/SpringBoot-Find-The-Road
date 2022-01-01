@@ -1,27 +1,3 @@
-// function include(file, callback) {
-//     var head      = document.getElementsByTagName('head')[0];
-//     var script    = document.createElement('script');
-//     script.type   = 'text/javascript';
-//     script.src    = file;
-//     script.onload = script.onreadystatechange = function() {
-//         // execute dependent code
-//         if (callback) callback();
-//         // prevent memory leak in IE
-//         head.removeChild(script);
-//         script.onload = null;
-//     };
-//     head.appendChild(script);
-// }
-//
-// include('http://ajax.googleapis.com/.../jquery.min.js', myFunction);
-
-// var script = document.createElement('script');
-// script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
-// script.type = 'text/javascript';
-// document.getElementsByTagName('head')[0].appendChild(script);
-
-
-
 // LOGIN TABS
 $(function() {
     var tab = $('.tabs h3 a');
@@ -97,7 +73,7 @@ $(function() {
     });
 });
 
-// DISPLAY MSSG
+// DISPLAY MESSAGES
 $(function() {
     $('.recovery .button').on('click', function(event) {
         event.preventDefault();
@@ -110,13 +86,3 @@ $(function() {
         }, 2500);
     });
 });
-
-// DISABLE SUBMIT FOR DEMO
-$(function() {
-    $('.button').on('click', function(event) {
-        $(this).stop();
-        event.preventDefault();
-        return false;
-    });
-});
-//# sourceURL=pen.js
