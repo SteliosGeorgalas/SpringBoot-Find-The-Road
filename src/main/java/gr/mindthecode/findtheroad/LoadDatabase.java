@@ -3,6 +3,7 @@ package gr.mindthecode.findtheroad;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import gr.mindthecode.findtheroad.entities.Customer;
+import gr.mindthecode.findtheroad.entities.Employee;
 import gr.mindthecode.findtheroad.entities.Project;
 import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.*;
@@ -87,6 +88,50 @@ public class LoadDatabase {
             "Panormou",
             "Smirnis",
     };
+
+
+    private static final String[] employeeNames = new String[]{
+            "Giannis",
+            "Stelios",
+            "Spyros",
+            "Panagiotis",
+            "Lefteris",
+            "Vangelis",
+            "Kostantinos",
+            "Giorgos",
+            "Georgia",
+            "Kostantina",
+            "Evaggelia",
+            "Eleutheria",
+            "Panagiota",
+            "Eleni",
+            "Stella",
+            "Zoi"
+    };
+
+    private static final String[] employeeLastNames = new String[]{
+            "Papakostantinou",
+            "Papapetrou",
+            "Eleutheriou",
+            "Sotiriou",
+            "Karakostas",
+            "Charalampou",
+            "Chatzichristou",
+
+    };
+    private  static final String[] employeeRoles = new String[]{
+            "Project Manager",
+            "Product Owner",
+            "Team Lead",
+            "Full-Stack Developer",
+            "Front-end Developer",
+            "Back-end Developer",
+            "UX designer",
+            "UI designer",
+            "Architectural Manager",
+            "QA tester"
+    };
+
 
     private static final String[] teamNamesNouns = new String[]{
             "Departnament",
@@ -201,6 +246,32 @@ public class LoadDatabase {
             );
         }
         return customers;
+    }
+
+    private static List<Employee> generateRandomEmployees() {
+        int count = getRandomUpperBound(15) + 5;
+
+        List<Employee> employees = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            String name = employeeNames[getRandomUpperBound(employeeNames.length)];
+            String lastName = employeeLastNames[getRandomUpperBound(employeeLastNames.length)];
+            int age = getRandomUpperBound(80) + 20;
+            String role = employeeRoles[getRandomUpperBound(employeeRoles.length)];
+            employees.add(
+                    //firstName, lastName, age, address, email, personalPhoneNumber
+                    new Employee(
+                            name,
+                            lastName,
+                            age,
+                            (addresses[getRandomUpperBound(addresses.length)] + " " + getRandomUpperBound(100)),
+                            getEmailFromName(name, lastName),
+                            ("210" + getRandomUpperBound(60000000)),
+                            role
+                    )
+            );
+        }
+        return employees;
     }
 
     @EventListener(ApplicationReadyEvent.class)
