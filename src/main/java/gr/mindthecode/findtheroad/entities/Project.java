@@ -41,9 +41,11 @@ public class Project { // A generic item class either tangible or intangible. Al
         this.customer = customer;
     }
 
-    public Project(String title, String description, float price, String date) {
+    public Project(String title, String description, float price, String dueDate) {
         this.title = title;
         this.description = description;
+        this.price = price;
+        this.dueDate = dueDate;
     }
 
 }

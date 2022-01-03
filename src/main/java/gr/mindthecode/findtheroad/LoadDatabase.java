@@ -118,6 +118,8 @@ public class LoadDatabase {
         return customers;
     }
 
+
+
     private static String getEmailFromName(String name, String lastName) {
         return (name.charAt(0) + "." + lastName + "@domainname.com");
     }

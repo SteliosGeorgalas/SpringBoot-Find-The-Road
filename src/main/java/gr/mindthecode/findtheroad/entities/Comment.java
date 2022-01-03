@@ -18,24 +18,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Comment {
     @Id
     private String id;
-
-    private String rating;  //βαθμολογία ή αστεράκια
+    private String comment;
     private String date;
-    
-    @DBRef
-    @JsonBackReference
-    private Person byWho;   //ποιός έγραψε το σχόλιο
-
-    @DBRef
-    @JsonManagedReference
-    private Person belongsTo; //ποιόν αφορά το σχόλιο
+    private Project project;
 
 
-    public Comment(String rating, String date, Person byWho, Person belongsTo) {
-        this.rating = rating;
+    public Comment(String comment, String date) {
+        this.comment = comment;
         this.date = date;
-        this.byWho = byWho;
-        this.belongsTo = belongsTo;
     }
 
 }
