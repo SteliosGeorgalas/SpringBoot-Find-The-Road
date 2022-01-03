@@ -1,4 +1,4 @@
-package gr.mindthecode.findtheroad.api;
+package gr.mindthecode.findtheroad.controllers.api;
 
 import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.TeamRepository;
