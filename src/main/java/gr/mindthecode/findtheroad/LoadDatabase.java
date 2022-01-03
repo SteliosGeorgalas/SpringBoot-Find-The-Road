@@ -4,6 +4,7 @@ import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import gr.mindthecode.findtheroad.entities.Customer;
 import gr.mindthecode.findtheroad.entities.Project;
+import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +88,37 @@ public class LoadDatabase {
             "Smirnis",
     };
 
+    private static final String[] teamNamesNouns = new String[]{
+            "Departnament",
+            "Potato",
+            "Attitude",
+            "Marketing",
+            "Hospital",
+            "Relation",
+            "Permission",
+            "Candidate",
+            "Revenue",
+            "Charity",
+            "Information"
+    };
+
+    private static final String[] teamNamesAdjectives = new String[]{
+            "Financial",
+            "Abhorrent",
+            "Puzzling",
+            "Impartial",
+            "Wide-eyed",
+            "Colossal",
+            "Powerful",
+            "Optimal",
+            "Infamous",
+            "Arrogant",
+            "Wild",
+            "Colorful"
+    };
+
+
+
 
     @Autowired
     ProjectRepository projectRepository;
@@ -131,6 +163,23 @@ public class LoadDatabase {
         return (month + "/" + year);
     }
 
+    private static List<Team> generateRandomTeams() {
+        int count = getRandomUpperBound(15) +5;
+
+        List<Team> teams = new ArrayList<>();
+
+        for (int i = 0; i < count; i++){
+            String teamName = teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                    + " - " +
+                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)];
+
+            teams.add(
+                    new Team(
+                            teamName));
+        }
+        return teams;
+    }
+
     private static List<Customer> generateRandomCustomers() {
         int count = getRandomUpperBound(15) + 5;
 
@@ -158,6 +207,7 @@ public class LoadDatabase {
     public void fillDatabase() {
         log.info("Preloading " + customerRepository.saveAll(generateRandomCustomers()));
         log.info("Preloading " + projectRepository.saveAll(generateRandomProjects()));
+        log.info("Preloading " + teamRepository.saveAll(generateRandomTeams()));
     }
 
     private static String getEmailFromName(String name, String lastName) {
