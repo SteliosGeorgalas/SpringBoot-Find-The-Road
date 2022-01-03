@@ -3,9 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet prefetch'>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
@@ -41,13 +40,40 @@
 <!--             src="https://e7.pngegg.com/pngimages/442/477/png-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png"/>-->
 <!--        <img class="logo" style="height: 30px;"-->
 <!--             src="https://previews.123rf.com/images/asmati/asmati1603/asmati160300996/53558014-user-avatar-anonimus-sign-line-icon-on-transparent-background.jpg"/>-->
-        <img class="logo"
-        src=" https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"/>
+<!--        <img class="logo"-->
+<!--        src=" https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"/>-->
+
+        <!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+        <head th:include="fragments/layout :: head(~{:: title})">
+            <title>Home</title>
+
+        </head>
+
+        <!--/* The element with breadcrumb class will be passed to the header fragment */-->
+          <header th:replace="fragments/layout :: header">
+<!--            <ol class="breadcrumb container">-->
+<!--                <li><a th:href="@{/}">Home</a></li>-->
+<!--                /-->
+<!--            </ol>-->
+          </header>
 
 
+        <!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
+        <div th:replace="fragments/layout :: content(~{:: #welcome})">
 
+            <div class="container text-white"><div id="welcome" class="row">
+                <div class="p-5 mb-4 rounded-3">
+                    <div class="container-fluid py-5">
+                        <h1 class="display-5 fw-bold">Welcome!</h1>
+                        <p class="px-5 mb-4">Our platform has been designed exclusively for organizations that seek complete control of the work that is being performed in their internal processes. Browse our demo to get a sense of its potential.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <footer th:replace="fragments/layout :: footer">Footer</footer>
 </div>
-
+</div>
 </body>
 </html>
