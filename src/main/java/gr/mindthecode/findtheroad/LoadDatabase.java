@@ -1,6 +1,9 @@
 package gr.mindthecode.findtheroad;
 
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import gr.mindthecode.findtheroad.entities.Customer;
+import gr.mindthecode.findtheroad.entities.Project;
 import gr.mindthecode.findtheroad.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +52,7 @@ public class LoadDatabase {
 
     };
 
+    // Meta - Update ERP
     private static final String[] projectNames = new String[]{
             "Entity",
             "Meta",
@@ -83,6 +87,7 @@ public class LoadDatabase {
             "Smirnis",
     };
 
+
     @Autowired
     ProjectRepository projectRepository;
     @Autowired
@@ -93,6 +98,38 @@ public class LoadDatabase {
     EmployeeRepository employeeRepository;
     @Autowired
     CommentRepository commentRepository;
+
+    private static List<Project> generateRandomProjects() {
+        int count = getRandomUpperBound(50);
+        List<Project> projects = new ArrayList<>();
+        Lorem lorem = LoremIpsum.getInstance();
+        for (int i = 0; i < count; i++) {
+            String title = projectNames[getRandomUpperBound(projectNames.length)]
+                    + " - " +
+                    projectWork[getRandomUpperBound(projectWork.length)]
+                    + " " +
+                    projectType[getRandomUpperBound(projectType.length)];
+
+            String description = lorem.getWords(5, 20);
+
+            projects.add(
+                    new Project(
+                            title,
+                            description,
+                            getRandomUpperBound(1500000),
+                            getDueDate()
+
+                    )
+            );
+        }
+        return projects;
+    }
+
+    private static String getDueDate() {
+        String month = Integer.toString((getRandomUpperBound(11) + 1));
+        String year = Integer.toString(getRandomUpperBound(2) + 2022);
+        return (month + "/" + year);
+    }
 
     private static List<Customer> generateRandomCustomers() {
         int count = getRandomUpperBound(15) + 5;
@@ -114,11 +151,14 @@ public class LoadDatabase {
                     )
             );
         }
-
         return customers;
     }
 
-
+    @EventListener(ApplicationReadyEvent.class)
+    public void fillDatabase() {
+        log.info("Preloading " + customerRepository.saveAll(generateRandomCustomers()));
+        log.info("Preloading " + projectRepository.saveAll(generateRandomProjects()));
+    }
 
     private static String getEmailFromName(String name, String lastName) {
         return (name.charAt(0) + "." + lastName + "@domainname.com");
@@ -126,10 +166,5 @@ public class LoadDatabase {
 
     private static int getRandomUpperBound(int i) {
         return new Random().nextInt(i);
-    }
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDatabase() {
-        log.info("Preloading " + customerRepository.saveAll(generateRandomCustomers()));
     }
 }

@@ -31,7 +31,7 @@ public class CommentController {
 
         return repository.findById(id)
                 .map(match -> {
-                    match.setRating(newComment.getRating());
+                    match.setComment(newComment.getComment());
                     match.setDate(newComment.getDate());
                     return repository.save(match);
                 })

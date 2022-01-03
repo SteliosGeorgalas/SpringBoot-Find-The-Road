@@ -42,8 +42,6 @@ public class TeamController {
         return repository.findById(id)
                 .map(match -> {
                     match.setName(newTeam.getName());
-                    match.setEmail(newTeam.getEmail());
-                    match.setTelephoneNumber(newTeam.getTelephoneNumber());
                     return repository.save(match);
                 })
                 .orElseGet(() -> {
