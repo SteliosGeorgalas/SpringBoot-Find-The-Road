@@ -2,10 +2,7 @@ package gr.mindthecode.findtheroad;
 
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
-import gr.mindthecode.findtheroad.entities.Customer;
-import gr.mindthecode.findtheroad.entities.Employee;
-import gr.mindthecode.findtheroad.entities.Project;
-import gr.mindthecode.findtheroad.entities.Team;
+import gr.mindthecode.findtheroad.entities.*;
 import gr.mindthecode.findtheroad.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +48,6 @@ public class LoadDatabase {
             "Karakostas",
             "Charalampou",
             "Chatzichristou",
-
     };
 
     // Meta - Update ERP
@@ -89,36 +85,6 @@ public class LoadDatabase {
             "Smirnis",
     };
 
-
-    private static final String[] employeeNames = new String[]{
-            "Giannis",
-            "Stelios",
-            "Spyros",
-            "Panagiotis",
-            "Lefteris",
-            "Vangelis",
-            "Kostantinos",
-            "Giorgos",
-            "Georgia",
-            "Kostantina",
-            "Evaggelia",
-            "Eleutheria",
-            "Panagiota",
-            "Eleni",
-            "Stella",
-            "Zoi"
-    };
-
-    private static final String[] employeeLastNames = new String[]{
-            "Papakostantinou",
-            "Papapetrou",
-            "Eleutheriou",
-            "Sotiriou",
-            "Karakostas",
-            "Charalampou",
-            "Chatzichristou",
-
-    };
     private  static final String[] employeeRoles = new String[]{
             "Project Manager",
             "Product Owner",
@@ -163,8 +129,6 @@ public class LoadDatabase {
     };
 
 
-
-
     @Autowired
     ProjectRepository projectRepository;
     @Autowired
@@ -175,6 +139,7 @@ public class LoadDatabase {
     EmployeeRepository employeeRepository;
     @Autowired
     CommentRepository commentRepository;
+
 
     private static List<Project> generateRandomProjects() {
         int count = getRandomUpperBound(50);
@@ -202,27 +167,22 @@ public class LoadDatabase {
         return projects;
     }
 
-    private static String getDueDate() {
-        String month = Integer.toString((getRandomUpperBound(11) + 1));
-        String year = Integer.toString(getRandomUpperBound(2) + 2022);
-        return (month + "/" + year);
-    }
+    private static List<Comment> generateRandomComments() {
+        int count = getRandomUpperBound(100) + 5;
 
-    private static List<Team> generateRandomTeams() {
-        int count = getRandomUpperBound(15) +5;
-
-        List<Team> teams = new ArrayList<>();
-
-        for (int i = 0; i < count; i++){
-            String teamName = teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
-                    + " - " +
-                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)];
-
-            teams.add(
-                    new Team(
-                            teamName));
+        List<Comment> comments = new ArrayList<>();
+        Lorem lorem = LoremIpsum.getInstance();
+        for (int i = 0; i < count; i++) {
+            String comment = lorem.getWords(10, 20);
+            String date = getCommentDate();
+            comments.add(
+                    new Comment(
+                            comment,
+                            date
+                    )
+            );
         }
-        return teams;
+        return comments;
     }
 
     private static List<Customer> generateRandomCustomers() {
@@ -254,8 +214,8 @@ public class LoadDatabase {
         List<Employee> employees = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            String name = employeeNames[getRandomUpperBound(employeeNames.length)];
-            String lastName = employeeLastNames[getRandomUpperBound(employeeLastNames.length)];
+            String name = personNames[getRandomUpperBound(personNames.length)];
+            String lastName = personLastNames[getRandomUpperBound(personLastNames.length)];
             int age = getRandomUpperBound(80) + 20;
             String role = employeeRoles[getRandomUpperBound(employeeRoles.length)];
             employees.add(
@@ -274,15 +234,48 @@ public class LoadDatabase {
         return employees;
     }
 
+    private static String getCommentDate() {
+        String month = Integer.toString((getRandomUpperBound(11) + 1));
+        String year = Integer.toString(getRandomUpperBound(2022 - 2020) + 2020);
+        return (month + "/" + year);
+    }
+
+    private static String getEmailFromName(String name, String lastName) {
+        return (name.toLowerCase().charAt(0) + "." + lastName.toLowerCase() + "@domainname.com");
+    }
+
+    private static String getDueDate() {
+        String month = Integer.toString((getRandomUpperBound(11) + 1));
+        String year = Integer.toString(getRandomUpperBound(2) + 2022);
+        return (month + "/" + year);
+    }
+
+    private static List<Team> generateRandomTeams() {
+        int count = getRandomUpperBound(15) + 5;
+
+        List<Team> teams = new ArrayList<>();
+
+        for (int i = 0; i < count; i++){
+            String teamName = teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                    + " - " +
+                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)];
+
+            teams.add(
+                    new Team(
+                            teamName));
+        }
+        return teams;
+    }
+
+
+
     @EventListener(ApplicationReadyEvent.class)
     public void fillDatabase() {
         log.info("Preloading " + customerRepository.saveAll(generateRandomCustomers()));
         log.info("Preloading " + projectRepository.saveAll(generateRandomProjects()));
         log.info("Preloading " + teamRepository.saveAll(generateRandomTeams()));
-    }
-
-    private static String getEmailFromName(String name, String lastName) {
-        return (name.charAt(0) + "." + lastName + "@domainname.com");
+        log.info("Preloading " + employeeRepository.saveAll(generateRandomEmployees()));
+        log.info("Preloading " + commentRepository.saveAll(generateRandomComments()));
     }
 
     private static int getRandomUpperBound(int i) {
