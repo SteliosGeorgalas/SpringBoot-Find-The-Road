@@ -21,8 +21,6 @@ public class Team {
     @Id
     private String id;
     private String name;
-    private String email;                   //may remove it
-    private String telephoneNumber;         //optional, may remove it
 
     private Employee teamLeader; // The team's team leader, who should belong in the employeeList List below.
 
@@ -34,15 +32,9 @@ public class Team {
     @JsonManagedReference
     private List<Employee> employeeList; //The team's list of employees
 
-    public Team(String name, String email, String telephoneNumber) {
+    public Team(String name) {
         this.name = name;
-        this.email = email;
-        this.telephoneNumber = telephoneNumber;
     }
 
-    public Team(String email, String telephoneNumber) {
-        this.email = email;
-        this.telephoneNumber = telephoneNumber;
-    }
 
 }

@@ -22,13 +22,6 @@ public class Employee extends Person {
     //private boolean teamLeader; Λέω αυτό να υλοποιηθεί σαν πεδίο της κάθε Team,
     // ούτως ώστε να μην υπάρξει ομάδα με παραπάνω από δύο team leaders
     private String role;
-    @DBRef
-    @JsonManagedReference
-    private List<Comment> commentList;
-
-    @DBRef
-    @JsonBackReference
-    private List<Comment> writtenCommentList;
 
     @DBRef
     @JsonBackReference

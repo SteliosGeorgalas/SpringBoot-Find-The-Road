@@ -1,4 +1,4 @@
-package gr.mindthecode.findtheroad.api;
+package gr.mindthecode.findtheroad.controllers.api;
 
 import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.TeamRepository;
@@ -42,8 +42,6 @@ public class TeamController {
         return repository.findById(id)
                 .map(match -> {
                     match.setName(newTeam.getName());
-                    match.setEmail(newTeam.getEmail());
-                    match.setTelephoneNumber(newTeam.getTelephoneNumber());
                     return repository.save(match);
                 })
                 .orElseGet(() -> {

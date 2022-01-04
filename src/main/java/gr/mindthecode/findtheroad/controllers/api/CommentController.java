@@ -1,4 +1,4 @@
-package gr.mindthecode.findtheroad.api;
+package gr.mindthecode.findtheroad.controllers.api;
 
 import gr.mindthecode.findtheroad.entities.Comment;
 import gr.mindthecode.findtheroad.repositories.CommentRepository;
@@ -31,7 +31,7 @@ public class CommentController {
 
         return repository.findById(id)
                 .map(match -> {
-                    match.setRating(newComment.getRating());
+                    match.setComment(newComment.getComment());
                     match.setDate(newComment.getDate());
                     return repository.save(match);
                 })
