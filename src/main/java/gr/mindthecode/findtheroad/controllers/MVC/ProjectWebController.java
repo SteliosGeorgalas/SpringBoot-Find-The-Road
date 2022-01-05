@@ -74,7 +74,7 @@ public class ProjectWebController {
         return "add-project";
     }
 
-    @PostMapping("/projects/addcar")
+    @PostMapping("/projects/addproject")
     public String addProject(Project project, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-project";
@@ -94,7 +94,7 @@ public class ProjectWebController {
         return "update-project";
     }
 
-    @PostMapping("/project/update/{id}")
+    @PostMapping("/projects/update/{id}")
     public String updateProject(@PathVariable("id") String id, Project project,
                             BindingResult result, Model model) {
         if (result.hasErrors()) {
