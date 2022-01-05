@@ -9,13 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping(value = {"", "/", "/home"})
     public String home() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Authentication check on backend if needed
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
-            return "home";
-        }
         return "home";
     }
 }

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-dark my-0 py-0" th:fragment="navigation">
     <img src="../../static/logo/FindTheRoad_logos_black2.jpg" class="mx-4 my-0 py-0" alt="Logo picture">
+
     <button class="navbar-toggler collapsed mx-1 my-1 bg-white" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="navbar-collapse collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="navList">
             <li class="nav-item active"><a class="nav-link text-white" th:classappend="${#request.requestURI.equals('/') ? 'active':''}" aria-current="page" href="/home">Home</a>
@@ -21,11 +26,13 @@
             </li>
             <li th:if="${#request.isUserInRole('USER')}" class="nav-item">
                 <form th:action="@{/logout}" method="post">
-                    <input class="nav-link button bg-dark text-white" id="inputLogout" type="submit" value="Sign Out">
+                    <input class="nav-link text-white" id="inputLogout" type="submit" value="Sign Out">
                 </form>
             </li>
         </ul>
     </div>
 </nav>
+
 </body>
+
 </html>

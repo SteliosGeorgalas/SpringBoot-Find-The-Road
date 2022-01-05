@@ -31,5 +31,5 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_INITDB_DATABASE: admin
     volumes:
-      - C:/mongodb/data:/data/db
-      - C:/mongodb/log:/var/log/mongodb
+      - ./mongodb/data:/data/db
+      - ./mongodb/log:/var/log/mongodb

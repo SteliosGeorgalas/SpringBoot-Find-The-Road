@@ -35,13 +35,6 @@
     </div>
 
     <div sec:authorize="isAuthenticated()">
-        <!--        TODO home browsing page-->
-<!--        <img class="logo" style="height: 30px;"-->
-<!--             src="https://e7.pngegg.com/pngimages/442/477/png-clipart-computer-icons-user-profile-avatar-profile-heroes-profile-thumbnail.png"/>-->
-<!--        <img class="logo" style="height: 30px;"-->
-<!--             src="https://previews.123rf.com/images/asmati/asmati1603/asmati160300996/53558014-user-avatar-anonimus-sign-line-icon-on-transparent-background.jpg"/>-->
-<!--        <img class="logo"-->
-<!--        src=" https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"/>-->
 
         <!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
         <head th:include="fragments/layout :: head(~{:: title})">
@@ -49,32 +42,34 @@
         </head>
 
         <!--/* The element with breadcrumb class will be passed to the header fragment */-->
-          <header th:replace="fragments/layout :: header">
-<!--            <ol class="breadcrumb container">-->
-<!--                <li><a th:href="@{/}">Home</a></li>-->
-<!--                /-->
-<!--            </ol>-->
-          </header>
-
+        <header th:replace="fragments/layout :: header">
+        </header>
 
         <!--/* Insert content fragment with content of the element with id = 'cars-list' */-->
         <div th:replace="fragments/layout :: content(~{:: #welcome})">
-
-            <div class="container text-white"><div id="welcome" class="row">
-                <div class="p-5 mb-4 rounded-3">
-                    <div class="container-fluid py-5">
-                        <h1 class="display-5 fw-bold">Welcome!</h1>
-                        <p class="px-5 my-4">Our platform has been designed exclusively for organizations that seek complete control of the work that is being performed in their internal processes. Browse our demo to get a sense of its potential.
-                        </p>
-                        <p class="px-5 my-4">The basic idea of our platform is to provide in each organization the ability to have universal supervision of all the processes that are implemented within it. For that  reason, we have implemented a solution that offers a supervisory way to control the correlations between the various participants, in the organization. Participants in the current version would be employees, employee groups, projects and clients.
-                        </p>
+            <div class="container text-white">
+                <div id="welcome" class="row">
+                    <div class="p-5 mb-4 rounded-3">
+                        <div class="container-fluid py-5">
+                            <h1 class="display-5 fw-bold">Welcome!</h1>
+                            <p class="px-5 my-4">Our platform has been designed exclusively for organizations that seek
+                                complete control of the work that is being performed in their internal processes. Browse
+                                our demo to get a sense of its potential.
+                            </p>
+                            <p class="px-5 my-4">The basic idea of our platform is to provide in each organization the
+                                ability to have universal supervision of all the processes that are implemented within
+                                it. For that reason, we have implemented a solution that offers a supervisory way to
+                                control the correlations between the various participants, in the organization.
+                                Participants in the current version would be employees, employee groups, projects and
+                                clients.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <footer th:replace="fragments/layout :: footer">Footer</footer>
     </div>
-    <footer th:replace="fragments/layout :: footer">Footer</footer>
-</div>
 </div>
 </body>
 </html>

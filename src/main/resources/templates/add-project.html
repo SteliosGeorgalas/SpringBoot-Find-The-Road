@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
 <head th:include="fragments/layout :: head(~{:: title})">
     <title>Add Project</title>
 </head>
@@ -9,7 +8,6 @@
 <body>
     <header th:replace="fragments/layout :: header">
     </header>
-    <!--/* Insert content fragment with content of the element with id = 'add-project' */-->
     <div th:replace="fragments/layout :: content(value = ~{:: #add-project})">
 
         <div id="add-project" class="row my-5" >

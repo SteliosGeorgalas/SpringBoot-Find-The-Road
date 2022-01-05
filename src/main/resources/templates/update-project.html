@@ -9,13 +9,11 @@
 <body>
     <header th:replace="fragments/layout :: header">
     </header>
-
     <!--/* Insert content fragment with content of the element with id = 'add-project' */-->
     <div th:replace="fragments/layout :: content(value = ~{:: #update-project})">
 
         <div id="update-project" class="row my-5" >
-            <form
-                    th:action="@{/projects/update/{id}(id=${project.id})}"
+            <form th:action="@{/projects/update/{id}(id=${project.id})}"
                     th:object="${project}"
                     method="post">
                 <div class="form-group">
