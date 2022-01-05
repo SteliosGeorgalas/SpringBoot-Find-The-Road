@@ -14,7 +14,6 @@ import org.springframework.context.event.EventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 @Configuration
@@ -181,6 +180,7 @@ public class LoadDatabase {
     }
 
     private <T extends Project> List<Comment> generateRandomComments(List<T> allProjects) {
+        updatedProjects.clear();
         List<Comment> totalComments= new ArrayList<>();
 
         for (Project  project: allProjects) {
@@ -231,21 +231,35 @@ public class LoadDatabase {
     public void deleteDatabase() {
         //delete data
         log.info("Deleting Customers"); customerRepository.deleteAll();
-        log.info("Deleting Projects");  projectRepository.deleteAll();
-        log.info("Deleting Teams"); teamRepository.deleteAll();
-        log.info("Deleting Employees"); employeeRepository.deleteAll();
-        log.info("Deleting Comments"); commentRepository.deleteAll();
+        log.info("Deleting Projects");
+        projectRepository.deleteAll();
+        log.info("Deleting Teams");
+        teamRepository.deleteAll();
+        log.info("Deleting Employees");
+        employeeRepository.deleteAll();
+        log.info("Deleting Comments");
+        commentRepository.deleteAll();
 
 
         // initialize data
-        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
-        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
-        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
-        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
-        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
-        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
-        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
-        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
+        log.info("Preloading Customers");
+        customerRepository.saveAll(generateRandomCustomers());
+        log.info("Preloading Projects");
+        projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+        log.info("Updating Customers ");
+        customerRepository.saveAll(updatedCustomers);
+        log.info("Preloading Teams");
+        teamRepository.saveAll(generateRandomTeams(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
+        log.info("Preloading Employees");
+        employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+        log.info("Updating Teams");
+        teamRepository.saveAll(updatedTeams);
+        log.info("Preloading Comments");
+        commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
     }
 
 //    @EventListener(ApplicationReadyEvent.class)
@@ -314,6 +328,24 @@ public class LoadDatabase {
         return (month + "/" + year);
     }
 
+
+    private <T extends Project> List<Team> generateRandomTeams(List<T> allProjects) {
+        List<Team> teamList = new ArrayList<>();
+        //allProjects.forEach((n) -> teamList.addAll(generateRandomTeamsForEachProject(n)));
+        allProjects.forEach((project) -> {
+            String teamName = teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                    + " - " +
+                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)];
+            Team team = new Team(teamName);
+            team.setProject(project);
+            project.setTeam(team);
+            updatedProjects.add(project);
+            teamList.add(team);
+        });
+        return teamList;
+    }
+
+    /*
     private static <T extends Project> List<Team> generateRandomTeams() {
         int count =2;// getRandomUpperBound(3) + 3;
 
@@ -330,6 +362,7 @@ public class LoadDatabase {
         }
         return teams;
     }
+    */
 
     private static int getRandomUpperBound(int i) {
         return new Random().nextInt(i);

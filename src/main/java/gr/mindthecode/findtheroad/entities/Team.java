@@ -25,7 +25,7 @@ public class Team {
 
     @DBRef
     @JsonBackReference
-    private List<Project> projectList; // The team's project List currently active
+    private Project project; // The team's project List currently active
 
     @DBRef
     @JsonManagedReference

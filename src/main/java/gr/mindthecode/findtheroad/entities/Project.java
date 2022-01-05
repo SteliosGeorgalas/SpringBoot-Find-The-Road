@@ -29,7 +29,7 @@ public class Project { // A generic item class either tangible or intangible. Al
 
     @DBRef
     @JsonManagedReference
-    private List<Team> team; // The list of teams currently working on the project.
+    private Team team; // The team currently working on the project.
 
     @DBRef
     @JsonManagedReference
