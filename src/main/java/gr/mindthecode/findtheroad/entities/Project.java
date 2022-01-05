@@ -33,6 +33,10 @@ public class Project { // A generic item class either tangible or intangible. Al
 
     @DBRef
     @JsonManagedReference
+    private List<Comment> comments; // The list of comments  on the project.
+
+    @DBRef
+    @JsonManagedReference
     private Customer customer; // The customer who requested the project.
 
     public Project(String title, String description, Customer customer) {

@@ -24,6 +24,8 @@ public class LoadDatabase {
 
     public List<Team> updatedTeams = new ArrayList<>();
     public List<Customer> updatedCustomers = new ArrayList<>();
+    public List<Project> updatedProjects = new ArrayList<>();
+
 
     private static final String[] personNames = new String[]{
             "Giannis",
@@ -178,22 +180,28 @@ public class LoadDatabase {
         return projects;
     }
 
-    private static List<Comment> generateRandomComments() {
-        int count = getRandomUpperBound(100) + 5;
+    private <T extends Project> List<Comment> generateRandomComments(List<T> allProjects) {
+        List<Comment> totalComments= new ArrayList<>();
 
-        List<Comment> comments = new ArrayList<>();
-        Lorem lorem = LoremIpsum.getInstance();
-        for (int i = 0; i < count; i++) {
-            String comment = lorem.getWords(10, 20);
-            String date = getCommentDate();
-            comments.add(
-                    new Comment(
-                            comment,
-                            date
-                    )
-            );
+        for (Project  project: allProjects) {
+            List< Comment> comments = new ArrayList<>();
+            int count = 5;//getRandomUpperBound(5) + 3;
+            Lorem lorem = LoremIpsum.getInstance();
+            for (int i = 0; i < count; i++) {
+                Comment comment = new Comment ();
+                comment.setComment(lorem.getWords(10, 20));
+                comment.setDate(getCommentDate());
+
+                comments.add(comment);
+            }
+
+            project.setComments(comments);
+            updatedProjects.add(project);
+
+            totalComments.addAll(comments);
+
         }
-        return comments;
+        return totalComments;
     }
 
     private static List<Customer> generateRandomCustomers() {
@@ -219,25 +227,39 @@ public class LoadDatabase {
         return customers;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void deleteDatabase() {
-//        log.info("Deleting Customers"); customerRepository.deleteAll();
-//        log.info("Deleting Projects");  projectRepository.deleteAll();
-//        log.info("Deleting Teams"); teamRepository.deleteAll();
-//        log.info("Deleting Employees"); employeeRepository.deleteAll();
-//        log.info("Deleting Comments"); commentRepository.deleteAll();
-//    }
-
     @EventListener(ApplicationReadyEvent.class)
-    public void fillDatabase() {
+    public void deleteDatabase() {
+        //delete data
+        log.info("Deleting Customers"); customerRepository.deleteAll();
+        log.info("Deleting Projects");  projectRepository.deleteAll();
+        log.info("Deleting Teams"); teamRepository.deleteAll();
+        log.info("Deleting Employees"); employeeRepository.deleteAll();
+        log.info("Deleting Comments"); commentRepository.deleteAll();
+
+
+        // initialize data
         log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
         log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
         log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
         log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
         log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
         log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
-        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments());
+        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
     }
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDatabase() {
+//        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
+//        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+//        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
+//        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
+//        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+//        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
+//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+//        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
+//
+//    }
 
     private <T extends Team> List<Employee> generateRandomEmployees(List<T> allTeams) {
 

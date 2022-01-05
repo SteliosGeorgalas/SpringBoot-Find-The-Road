@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "person")
+@Document(collection = "employee")
 @TypeAlias("employee")
 public class Employee extends Person {
 

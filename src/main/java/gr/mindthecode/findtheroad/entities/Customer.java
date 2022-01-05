@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "person")
+@Document(collection = "customer")
 @TypeAlias("customer")
 public class Customer extends Person {
     @DBRef
