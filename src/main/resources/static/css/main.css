@@ -1048,7 +1048,11 @@ input {
     height: 0;
 }
 #inputLogout {
-    padding:8px; margin: auto; border:0;
+    padding:8px;
+    margin: auto;
+    border:0;
+    background-color: #212529;
+
 }
 div.container-fluid.py-5{
     color:#fff;
@@ -1061,8 +1065,11 @@ div.container-fluid.py-5{
     }
 }
 ul#navList li:hover a {
-    color: blue;
+    background-color: #bbbbbb;
 }
 #inputLogout:hover{
-    color: blue;
+    background-color: #bbbbbb;
+}
+a.text-white:hover {
+    text-decoration: underline;
 }

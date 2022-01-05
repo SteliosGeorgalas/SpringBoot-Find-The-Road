@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Projects</title>
+</head>
+
+<body>
+    <header th:replace="fragments/layout :: header">
+    </header>
+    <!--/* Insert content fragment with content of the element with id = 'projects-list' */-->
+    <div th:replace="fragments/layout :: content(value = ~{:: #projects-list})">
+        <div id="projects-list" class="row" >
+            <div class="col-md-12" th:switch="${projects.totalElements}">
+                <h2 th:case="0">No Projects Found!</h2>
+                <div th:case="*" >
+                    <h2 class="text-center my-5 display-3 text-white">Projects</i></h2>
+                    <form th:action="@{/projects}" th:object="${searchModel}" method="post" class="form-inline">
+                        <input class="form-control mr-sm-2" th:field="*{title}"  type="search" placeholder="Search by title" aria-label="Search" />
+                    </form>
+                    <a class="col-md-2 btn btn-primary mx-1 mt-3" th:href="@{/projects/addproject}">Create New Project</a>
+                    <table class="table text-white">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Due Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="project : ${projects.iterator()}">
+                            <td th:text="${project.id}"></td>
+                            <td><a th:text="${project.title}" th:href="@{/teams/responsiblefor/{id}(id=${project.id})}"></a></td>
+                            <td th:text="${project.description}"></td>
+                            <td th:text="${project.price}"></td>
+                            <td th:text="${project.dueDate}"></td>
+                            <td><a class="text-white" th:href="@{/projects/update/{id}(id=${project.id})}">Edit</a></td>
+                            <td><a class="text-white" th:href="@{/projects/delete/{id}(id=${project.id})}">Delete</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <div class="page-link" style="color: black" th:text="'Total Projects:' + ${projects.totalElements}"></div>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:style="${projects.hasPrevious ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                   th:href="@{/projects(size=${projects.size}, page=${page - 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                                <a class="page-link"
+                                   th:style="${pageNumber == page ? 'background:#c7c7c7;' : 'background:initial;'}"
+                                   th:href="@{/projects(size=${projects.size}, page=${pageNumber}, searchByTitle=${searchModel.title})}"
+                                   th:text="${pageNumber}"></a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:style="${projects.hasNext ? 'pointer-events:initial;' : 'pointer-events:none;color:#c5c4c4'}"
+                                   th:href="@{/projects(size=${projects.size}, page=${page + 1}, searchByTitle=${searchModel.title})}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>
