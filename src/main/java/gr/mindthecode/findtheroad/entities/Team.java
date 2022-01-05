@@ -22,7 +22,6 @@ public class Team {
     private String id;
     private String name;
 
-    private Employee teamLeader; // The team's team leader, who should belong in the employeeList List below.
 
     @DBRef
     @JsonBackReference
