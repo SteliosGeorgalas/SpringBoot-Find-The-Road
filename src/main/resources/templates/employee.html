@@ -20,16 +20,16 @@
 </header>
 
 <div class="container">
-    <form id="searchBoxForm" th:action="@{/person}" th:object="${searchModel}" method="post" class="form-inline">
+    <form id="searchBoxForm" th:action="@{/employee}" th:object="${searchModel}" method="post" class="form-inline">
         <div th:replace="fragments/layout :: searchBar(searchTypeName = 'Search by Last Name', searchType = 'lastName')">
         </div>
     </form>
 
-    <div th:replace="fragments/tableFrags :: personTable">
+    <div th:replace="fragments/tableFrags :: employeeTable">
     </div>
 
-    <div th:replace="fragments/layout :: navPagination('person', ${person.totalElements}, ${person.size},
-                                                            ${person.hasPrevious}, ${person.hasNext})">
+    <div th:replace="fragments/layout :: navPagination('employee', ${employee.totalElements}, ${employee.size},
+                                                            ${employee.hasPrevious}, ${employee.hasNext})">
     </div>
 </div>
 

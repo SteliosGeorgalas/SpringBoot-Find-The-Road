@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonSearchModel {
+public class EmployeeSearchModel {
     private String lastName;
 
 }

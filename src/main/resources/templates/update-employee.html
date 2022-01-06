@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="fragments/layout :: head(~{:: title})">
-    <title>Update person</title>
+    <title>Update employee</title>
 </head>
 
 <body>
 <header th:replace="fragments/layout :: header">
 </header>
-<div th:replace="fragments/layout :: content(value = ~{:: #update-person})">
+<div th:replace="fragments/layout :: content(value = ~{:: #update-employee})">
 
-    <div id="update-person" class="row my-5">
-        <form th:action="@{/person/update/{id}(id=${person.id})}"
-              th:object="${person}"
+    <div id="update-employee" class="row my-5">
+        <form th:action="@{/employee/update/{id}(id=${employee.id})}"
+              th:object="${employee}"
               method="post">
             <div class="form-group">
                 <label class="text-white mt-4" for="firstName">First Name</label>
@@ -25,6 +25,13 @@
                 <input type="text" th:field="*{lastName}" id="lastName" placeholder="lastName"
                        class="form-control">
                 <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="text-white mt-4" for="role">Role</label>
+                <input type="text" th:field="*{role}" id="role" placeholder="role"
+                       class="form-control">
+                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
             </div>
 
             <div class="form-group">
@@ -56,7 +63,7 @@
                 <span th:if="${#fields.hasErrors('personalPhoneNumber')}" th:errors="*{personalPhoneNumber}"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-5">Update person</button>
+            <button type="submit" class="btn btn-primary mt-5">Update employee</button>
         </form>
     </div>
 </div>

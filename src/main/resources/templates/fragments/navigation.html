@@ -16,7 +16,7 @@
             <li class="nav-item active"><a class="nav-link text-white" th:classappend="${#request.requestURI.equals('/') ? 'active':''}" aria-current="page" href="/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" th:classappend="${#request.requestURI.startsWith('/person') ? 'active':''}" href="/person">People</a>
+                <a class="nav-link text-white" th:classappend="${#request.requestURI.startsWith('/employee') ? 'active':''}" href="/employee">Employees</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white" th:classappend="${#request.requestURI.startsWith('/teams') ? 'active':''}" href="/teams">Teams</a>
