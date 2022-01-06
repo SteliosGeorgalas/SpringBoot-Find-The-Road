@@ -16,7 +16,7 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/api/project")
+    @GetMapping("/api/projects")
     List<Project> getProject(
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "titleStartsWith", required = false) String titleStartsWith
