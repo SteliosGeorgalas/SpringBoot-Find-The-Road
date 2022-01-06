@@ -1,6 +1,6 @@
 package gr.mindthecode.findtheroad.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.List;
 @TypeAlias("customer")
 public class Customer extends Person {
     @DBRef
-    @JsonBackReference
+    @JsonManagedReference(value = "projectCustomers")
     private List<Project> projectList;
 
     public Customer(String firstName, String lastName, int age, String address, String email,

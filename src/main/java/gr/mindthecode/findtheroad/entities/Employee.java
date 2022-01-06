@@ -1,17 +1,13 @@
 package gr.mindthecode.findtheroad.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,7 +22,7 @@ public class Employee extends Person {
     private String role;
 
     @DBRef
-    @JsonBackReference
+    @JsonBackReference(value = "teamEmployees")
     private Team team;
 
 

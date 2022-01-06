@@ -36,7 +36,7 @@ public class ProjectController {
                 .orElseThrow(() -> new RuntimeException("Cannot find project with id " + id));
     }
 
-    @PutMapping("/api/project/{id}")
+    @PutMapping(value = "/api/project/{id}", consumes = "application/json")
     Project updateProject(@RequestBody Project newProject, @PathVariable String id) {
 
         return repository.findById(id)

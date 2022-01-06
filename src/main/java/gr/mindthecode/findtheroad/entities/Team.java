@@ -25,11 +25,11 @@ public class Team {
 
 
     @DBRef
-    @JsonBackReference
+    @JsonBackReference(value = "projectTeam")
     private List<Project> projectList = new ArrayList<>(); // The team's project List currently active
 
     @DBRef
-    @JsonManagedReference
+    @JsonManagedReference(value = "teamEmployees")
     private List<Employee> employeeList; //The team's list of employees
 
     public Team(String name) {

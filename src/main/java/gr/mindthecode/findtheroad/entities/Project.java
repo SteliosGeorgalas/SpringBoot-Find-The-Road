@@ -30,15 +30,15 @@ public class Project { // A generic item class either tangible or intangible. Al
     private String dueDate;
 
     @DBRef
-    @JsonManagedReference
+    @JsonManagedReference(value = "projectTeam")
     private List<Team> teamList = new ArrayList<>(); // The list of teams currently working on the project.
 
     @DBRef
-    @JsonManagedReference
+    @JsonManagedReference(value = "projectComments")
     private List<Comment> comments; // The list of comments  on the project.
 
     @DBRef
-    @JsonManagedReference
+    @JsonBackReference(value = "projectCustomers")
     private Customer customer; // The customer who requested the project.
 
     public Project(String title, String description, Customer customer) {

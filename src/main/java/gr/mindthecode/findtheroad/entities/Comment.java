@@ -1,7 +1,6 @@
 package gr.mindthecode.findtheroad.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ public class Comment {
     private String comment;
     private String date;
     @DBRef
-    @JsonBackReference
+    @JsonBackReference(value = "projectComments")
     private Project project;
 
 
