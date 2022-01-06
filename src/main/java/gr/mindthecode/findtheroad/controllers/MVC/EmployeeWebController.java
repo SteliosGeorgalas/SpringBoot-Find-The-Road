@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,15 @@ public class EmployeeWebController {
     @PostMapping("/employee")
     public String searchEmployeeSubmit(
             @ModelAttribute EmployeeSearchModel searchModel) {
-                return "redirect:/employee?searchByLastName=" + searchModel.getLastName();
+        return "redirect:/employee?searchByLastName=" + searchModel.getLastName();
+    }
+
+    @GetMapping("/employees/responsibleForTeam/{id}")
+    public String searchEmployeeId(@PathVariable("id") String id,
+            @ModelAttribute EmployeeSearchModel searchModel) {
+
+        System.out.println("Testefe" + searchModel + " gregerbTest !!! " + id);
+        return "redirect:/employee?searchByTeamId=" + id;
     }
 
     @GetMapping("/employee")
@@ -35,27 +44,35 @@ public class EmployeeWebController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String searchByLastName
+            @RequestParam(defaultValue = "") String searchByLastName,
+            @RequestParam(defaultValue = "") String searchByTeamId
     ) {
         if (page < 1) {
-            return "redirect:/employee?page=1&size="+ size;
-        };
+            return "redirect:/employee?page=1&size=" + size;
+        }
+        ;
+
+        List<Employee> employeeList = repository.findAll();
+        if (!searchByTeamId.equals("")) {
+            employeeList = repository.findCustomByTeamId(searchByTeamId);
+        } else if (!searchByLastName.equals("")) {
+            employeeList = repository.findByLastName(searchByLastName);
+        }
 
         Page<Employee> employee = findPaginated(
-                !searchByLastName.equals("") ?
-                        repository.findByLastName(searchByLastName) :
-                        repository.findAll(),
+                employeeList,
                 PageRequest.of(page - 1, size)
         );
 
         int totalPages = employee.getTotalPages();
 
         if (totalPages > 0 && page > totalPages) {
-            return "redirect:/employee?size="+ size + "&page=" + totalPages;
-        };
+            return "redirect:/employee?size=" + size + "&page=" + totalPages;
+        }
+        ;
 
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page - 2), Math.min(page + 2, totalPages))
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -63,7 +80,8 @@ public class EmployeeWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("employee", employee);
-        model.addAttribute("searchModel", new EmployeeSearchModel(searchByLastName));
+        model.addAttribute("searchModel", new EmployeeSearchModel(searchByLastName, searchByTeamId));
+//        model.addAttribute("searchModel", new EmployeeSearchModel(searchById));
         return "employee";
     }
 
@@ -95,7 +113,7 @@ public class EmployeeWebController {
 
     @PostMapping("/employee/update/{id}")
     public String updateEmployee(@PathVariable("id") String id, Employee employee,
-                            BindingResult result, Model model) {
+                                 BindingResult result, Model model) {
         if (result.hasErrors()) {
             employee.setId(id);
             return "update-employee";
@@ -131,7 +149,6 @@ public class EmployeeWebController {
 
         return employeePage;
     }
-
 
 
 }

@@ -17,7 +17,7 @@
                 <tr>
                     <th># Id</th>
                     <th>Name</th>
-                    <th>Project List</th>
+                    <th>Project</th>
                     <th>Employee List</th>
                     <th>Actions</th>
                 </tr>
@@ -26,8 +26,18 @@
                 <tr th:each="team : ${teams.iterator()}">
                     <td th:text="${team.id}"></td>
                     <td th:text="${team.name}"></td>
-                    <td th:text="${team.projectList}"></td>
-                    <td th:text="${team.employeeList}"></td>
+                    <td th:text="${team.project.title}"></td>
+                    <td>
+                        <select>
+                            <option th:each="listItem : ${team.employeeList}"
+                                    th:text="${listItem.firstName} + ' ' + ${listItem.lastName}"></option>
+                        </select>
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/employees/responsibleForTeam/{id}(id=${team.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
+                    </td>
+
                     <td><a class="text-white" th:href="@{/teams/update/{id}(id=${team.id})}">Edit</a>
                         <a class="text-white" th:href="@{/teams/delete/{id}(id=${team.id})}">Delete</a>
                 </tr>

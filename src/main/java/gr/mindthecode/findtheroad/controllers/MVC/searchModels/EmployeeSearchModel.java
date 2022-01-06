@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component;
 public class EmployeeSearchModel {
     private String lastName;
 
+    private String teamId;
+
 }
