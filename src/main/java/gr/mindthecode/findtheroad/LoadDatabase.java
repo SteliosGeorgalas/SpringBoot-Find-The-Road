@@ -188,14 +188,14 @@ public class LoadDatabase {
 //
 //    }
     private static List<Customer> generateRandomCustomers() {
-        int count =  getRandomUpperBound(10) + 5;
+        int count = 1;
 
         List<Customer> customers = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             String name = personNames[getRandomUpperBound(personNames.length)];
             String lastName = personLastNames[getRandomUpperBound(personLastNames.length)];
-            int age = getRandomUpperBound(40) + 20;
+            int age = getRandomUpperBound(20) + 5;
             customers.add(
                     new Customer(
                             name,
