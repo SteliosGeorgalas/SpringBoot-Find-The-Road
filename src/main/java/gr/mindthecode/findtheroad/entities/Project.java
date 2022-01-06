@@ -1,5 +1,6 @@
 package gr.mindthecode.findtheroad.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,7 +31,7 @@ public class Project { // A generic item class either tangible or intangible. Al
 
     @DBRef
     @JsonManagedReference
-    private Team team; // The team currently working on the project.
+    private List<Team> teamList = new ArrayList<>(); // The list of teams currently working on the project.
 
     @DBRef
     @JsonManagedReference
