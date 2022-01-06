@@ -597,6 +597,11 @@ input {
     width: 50%;
 }
 
+.errorGen{
+    text-align: center;
+    padding: 70px 0;
+}
+
 .form-wrap .tabs h3 a {
     padding: 0.5em 0;
     text-align: center;

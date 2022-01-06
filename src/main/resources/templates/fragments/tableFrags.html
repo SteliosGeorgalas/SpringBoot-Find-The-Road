@@ -17,7 +17,6 @@
                 <tr>
                     <th># Id</th>
                     <th>Name</th>
-                    <th>Team Leader</th>
                     <th>Project List</th>
                     <th>Employee List</th>
                     <th>Actions</th>
@@ -27,7 +26,6 @@
                 <tr th:each="team : ${teams.iterator()}">
                     <td th:text="${team.id}"></td>
                     <td th:text="${team.name}"></td>
-                    <td th:text="${team.teamLeader}"></td>
                     <td th:text="${team.projectList}"></td>
                     <td th:text="${team.employeeList}"></td>
                     <td><a class="text-white" th:href="@{/teams/update/{id}(id=${team.id})}">Edit</a>
