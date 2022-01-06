@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="login">
+
+    <head th:include="fragments/layout :: head(~{:: title})">
+        <title>Home</title>
+    </head>
+
+    <!--/* The element with breadcrumb class will be passed to the header fragment */-->
+    <header th:replace="fragments/layout :: header">
+    </header>
+    <div class="errorGen">
+        <a class="logo">
+            <img src="../../static/logo/sad_logo.png" class="mx-4 my-0 py-0" alt="Logo picture">
+        </a>
+        <h1> Something went wrong! </h1>
+        <h2>Our Engineers are on it</h2>
+        <a href="/">Go Home</a>
+    </div>
+
+    <footer th:replace="fragments/layout :: footer">Footer</footer>
+</div>
+</body>
+</html>

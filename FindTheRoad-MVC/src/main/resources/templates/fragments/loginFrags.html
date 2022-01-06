@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+
+<div th:fragment="toogleWrap">
+    <div id="toggle-terms">
+        <div id="cross">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="terms">
+    <h2>About US</h2>
+    <p class="small">Last modified</p>
+    <h3>Welcome to Find the Road Project sponsored by MindTheCode Kariera.gr</h3>
+    <h3>About us</h3>
+    <p>About usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout
+        usAbout usAbout us
+        About usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout usAbout us.</p>
+    <p>For information about how to contact</p>
+</div>
+
+
+<div th:fragment="slider">
+    <!-- SLIDESHOW -->
+    <div id="slideshow">
+        <div class="one">
+            <h2><span>Find The Road</span></h2>
+            <p> Our platform has been designed exclusively for organizations that seek
+                complete control of the work </p>
+        </div>
+        <div class="two">
+            <h2><span>Find The Road</span></h2>
+            <p>Browse our demo to get a sense of its potential.</p>
+        </div>
+        <div class="three">
+            <h2><span>Find The Road</span></h2>
+            <p>The basic idea of our platform is to provide in each organization the
+                ability to have universal supervision</p>
+        </div>
+        <div class="four">
+            <h2><span>Find The Road</span></h2>
+            <p> We have implemented a solution that offers a supervisory way to
+                control the correlations between the various participants</p>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="loginForm">
+    <div class="form-wrap">
+        <!-- TABS -->
+        <span> <h3 Find The Road Project></h3> </span>
+        <div class="tabs">
+            <h3 class="login-tab"><a class="log-in active" href="#login-tab-content"><span>Login</span></a></h3>
+            <!--					<h3 class="signup-tab"><a class="sign-up" href="#signup-tab-content"><span>Sign Up</span></a></h3>-->
+        </div>
+        <!-- TABS CONTENT -->
+        <div class="tabs-content">
+            <!-- TABS CONTENT LOGIN -->
+            <div id="login-tab-content" class="active" th:with="error = ${param.error}, logout = ${param.logout}">
+                <form class="login-form" th:action="@{/home}" method="post">
+                    <input type="text" class="input" name="username" autocomplete="off"
+                           placeholder="Email or Username">
+                    <input type="password" class="input" name="password" autocomplete="off"
+                           placeholder="Password">
+                    <input type="checkbox" class="checkbox" checked id="remember_me">
+                    <label for="remember_me">Remember me</label>
+                    <div class="help-action" th:if="${error}">
+                        <p>Invalid username or password.</p>
+                    </div>
+                    <input type="submit" class="button" value="Login">
+                </form>
+                <div class="help-action">
+                    <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a
+                            class="agree" href="#">About US</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="recovery">
+    <!--   TODO -->
+    <h2>Password Recovery</h2>
+    <p>Enter either the <strong>email address</strong> or <strong>username</strong> on the account and <strong>click
+        Submit</strong></p>
+    <p>We'll email instructions on how to reset your password.</p>
+    <form class="recovery-form" action="" method="post">
+        <input type="text" class="input" id="user_recover" placeholder="Enter Email or Username Here">
+        <input type="submit" class="button" value="Submit">
+    </form>
+    <p class="mssg">An email has been sent to you with further instructions.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Update Project</title>
+</head>
+
+<body>
+    <header th:replace="fragments/layout :: header">
+    </header>
+    <!--/* Insert content fragment with content of the element with id = 'add-project' */-->
+    <div th:replace="fragments/layout :: content(value = ~{:: #update-project})">
+
+        <div id="update-project" class="row my-5" >
+            <form th:action="@{/projects/update/{id}(id=${project.id})}"
+                    th:object="${project}"
+                    method="post">
+                <div class="form-group">
+                    <label class="text-white mt-4" for="title">Title</label>
+                    <input type="text" th:field="*{title}" id="title" placeholder="Title" class="form-control">
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-white mt-4" for="description">Description</label>
+                    <input type="text" th:field="*{description}" id="description" placeholder="Description" class="form-control">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-white mt-4" for="price">Price</label>
+                    <input type="text" th:field="*{price}" id="price" placeholder="Price" class="form-control">
+                    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-white mt-4" for="dueDate">Due Date</label>
+                    <input type="text" th:field="*{dueDate}" id="dueDate" placeholder="mm/year" class="form-control">
+                    <span th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-5">Update Project</button>
+            </form>
+        </div>
+    </div>
+    <footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>

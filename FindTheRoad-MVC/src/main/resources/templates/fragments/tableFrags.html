@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="teams-list" class="row" th:fragment="teamsTable">
+    <div class="col-md-12" th:switch="${teams.totalElements}">
+        <h2 th:case="0">No teams found!</h2>
+        <div th:case="*">
+            <h2>Teams</h2>
+            <a style="position: absolute" th:href="@{/teams/addteam}">Create New Team</a>
+            <table class="table table-dark table-striped">
+                <thead style="height: 60px">
+                <tr>
+                    <th># Id</th>
+                    <th>Name</th>
+                    <th>Project</th>
+                    <th>Employee List</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="team : ${teams.iterator()}">
+                    <td th:text="${team.id}"></td>
+                    <td th:text="${team.name}"></td>
+                    <td>
+                        <select>
+                            <option th:each="project : ${team.projectList}"
+                                    th:text="${project.title}"></option>
+                        </select>
+<!--                        <a style="width: 40px; position: absolute" class="logo"-->
+<!--                           th:href="@{/project/responsibleForTeam/{id}(id=${project.id})}">-->
+<!--                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">-->
+<!--                        </a>-->
+                    </td>
+                    <td>
+                        <select>
+                            <option th:each="listItem : ${team.employeeList}"
+                                    th:text="${listItem.firstName} + ' ' + ${listItem.lastName}"></option>
+                        </select>
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/employees/responsibleForTeam/{id}(id=${team.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
+                    </td>
+
+                    <td><a class="text-white" th:href="@{/teams/update/{id}(id=${team.id})}">Edit</a>
+                        <a class="text-white" th:href="@{/teams/delete/{id}(id=${team.id})}">Delete</a>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="project-list" class="row" th:fragment="projectTable">
+    <div class="col-md-12" th:switch="${projects.totalElements}">
+        <h2 th:case="0">No Projects Found!</h2>
+        <div th:case="*">
+            <h2>Projects</h2>
+            <a style="position: absolute" th:href="@{/projects/addproject}">Create New Project</a>
+            <table class="table table-dark table-striped">
+                <thead style="height: 60px">
+                <tr>
+                    <th># Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Due Date</th>
+                    <th>Team</th>
+                    <th>Customer</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects.iterator()}">
+                    <td th:text="${#strings.abbreviate(project.id,15)} "></td>
+                    <td><a th:text="${#strings.abbreviate(project.title,15)}"
+                           th:href="@{/teams/responsiblefor/{id}(id=${project.id})}"></a></td>
+                    <td th:text="${#strings.abbreviate(project.description,15)} "></td>
+                    <td th:text="${#numbers.formatDecimal(project.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${project.dueDate}"></td>
+                    <td>
+                        <select>
+                            <option th:each="team : ${project.teamList}"
+                                    th:text="${#strings.abbreviate(team.name,15)}"></option>
+                        </select>
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/teams/responsibleForProject/{id}(id=${project.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
+                    </td>
+                    <td th:text="${project.customer.lastName}"></td>
+                    <td>
+                        <select>
+                            <option th:each="listComm : ${project.comments}"
+                                    th:text="${#strings.abbreviate(listComm.comment,15)}"></option>
+                        </select>
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/comments/responsibleForProject/{id}(id=${project.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
+                    </td>
+                    <td><a class="text-white" th:href="@{/projects/update/{id}(id=${project.id})}">Edit</a>
+                        <a class="text-white" th:href="@{/projects/delete/{id}(id=${project.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="employee-list" class="row" th:fragment="employeeTable">
+    <div class="col-md-12" th:switch="${employee.totalElements}">
+        <h2 th:case="0">No employees found!</h2>
+        <div th:case="*">
+            <h2>Employees</h2>
+            <a style="position: absolute" th:href="@{/employee/addemployee}">Create New Employee</a>
+            <table class="table table-dark table-striped">
+                <thead style="height: 60px">
+                <tr>
+                    <th># Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Team</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pn : ${employee.iterator()}">
+                    <td th:text="${pn.id}"></td>
+                    <td th:text="${pn.firstName}"></td>
+                    <td th:text="${pn.lastName}"></td>
+                    <td th:text="${pn.role}"></td>
+                    <td th:text="${pn.team.name}"></td>
+                    <td th:text="${pn.age}"></td>
+                    <td th:text="${pn.address}"></td>
+                    <td th:text="${pn.email}"></td>
+                    <td th:text="${pn.personalPhoneNumber}"></td>
+                    <td><a class="text-white" th:href="@{/employee/update/{id}(id=${pn.id})}">Edit</a>
+                        <a class="text-white" th:href="@{/employee/delete/{id}(id=${pn.id})}">Delete</a>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="comment-list" class="row" th:fragment="commentTable">
+    <div class="col-md-12" th:switch="${comment.totalElements}">
+        <h2 th:case="0">No Comments Found!</h2>
+        <div th:case="*">
+            <h2>Comments</h2>
+            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>
+            <table class="table table-dark table-striped">
+                <thead style="height: 60px">
+                <tr>
+                    <th># Id</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                    <th>Project</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="comm : ${comment.iterator()}">
+                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>
+                    <td th:text="${comm.comment}"></td>
+                    <td th:text="${comm.date}"></td>
+                    <td th:text="${comm.project}"></td>
+                    <td><a class="text-white" th:href="@{/comment/update/{id}(id=${comm.id})}">Edit</a>
+                        <a class="text-white" th:href="@{/comment/delete/{id}(id=${comm.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

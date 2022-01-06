@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/layout :: head(~{:: title})">
+    <title>Update team</title>
+</head>
+
+<body>
+<header th:replace="fragments/layout :: header">
+</header>
+
+<div th:replace="fragments/layout :: content(value = ~{:: #update-team})">
+
+    <div id="update-team" class="row my-5">
+        <form th:action="@{/teams/update/{id}(id=${team.id})}"
+              th:object="${team}"
+              method="post">
+            <div class="form-group">
+                <label class="text-white mt-4" for="name">name</label>
+                <input type="text" th:field="*{name}" id="name" placeholder="name" class="form-control">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="text-white mt-4" for="employeeList">Employee List</label>
+                <input type="text" th:field="*{employeeList}" id="employeeList" placeholder="employeeList"
+                       class="form-control">
+                <span th:if="${#fields.hasErrors('employeeList')}" th:errors="*{employeeList}"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-5">Update team</button>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments/layout :: footer">Footer</footer>
+</body>
+</html>
