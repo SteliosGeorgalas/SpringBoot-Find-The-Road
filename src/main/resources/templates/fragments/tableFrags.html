@@ -86,11 +86,11 @@
                     <td th:text="${project.dueDate}"></td>
                     <td>
                         <select>
-                            <option th:each="team : ${project.team}"
+                            <option th:each="team : ${project.teamList}"
                                     th:text="${#strings.abbreviate(team.name,15)}"></option>
                         </select>
                         <a style="width: 40px; position: absolute" class="logo"
-                           th:href="@{/teams/responsibleForProject/{id}(id=${team.id})}">
+                           th:href="@{/teams/responsibleForProject/{id}(id=${project.id})}">
                             <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
                         </a>
                     </td>
@@ -177,6 +177,7 @@
                 <tbody>
                 <tr th:each="comm : ${comment.iterator()}">
                     <td th:text="${#strings.abbreviate(comm.id,15)} "></td>
+                    <td th:text="${comm.comment}"></td>
                     <td th:text="${comm.date}"></td>
                     <td th:text="${comm.project}"></td>
                     <td><a class="text-white" th:href="@{/comment/update/{id}(id=${comm.id})}">Edit</a>
