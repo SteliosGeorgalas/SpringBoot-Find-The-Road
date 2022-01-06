@@ -325,6 +325,7 @@ public class LoadDatabase {
             updatedTeams = allTeams.stream().map( team ->
             {
                 int projectCount = getRandomUpperBound(2) + 1;
+
                 for (int i = 0; i < projectCount;i++){
                    Project randomProject = allProjects.get(getRandomUpperBound(allProjects.size()));
 
