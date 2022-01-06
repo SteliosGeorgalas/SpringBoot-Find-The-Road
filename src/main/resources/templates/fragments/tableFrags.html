@@ -26,7 +26,16 @@
                 <tr th:each="team : ${teams.iterator()}">
                     <td th:text="${team.id}"></td>
                     <td th:text="${team.name}"></td>
-                    <td th:text="${team.project.title}"></td>
+                    <td>
+                        <select>
+                            <option th:each="project : ${team.projectList}"
+                                    th:text="${project.title}"></option>
+                        </select>
+<!--                        <a style="width: 40px; position: absolute" class="logo"-->
+<!--                           th:href="@{/project/responsibleForTeam/{id}(id=${project.id})}">-->
+<!--                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">-->
+<!--                        </a>-->
+                    </td>
                     <td>
                         <select>
                             <option th:each="listItem : ${team.employeeList}"
@@ -75,7 +84,16 @@
                     <td th:text="${#strings.abbreviate(project.description,15)} "></td>
                     <td th:text="${#numbers.formatDecimal(project.price, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${project.dueDate}"></td>
-                    <td th:text="${project.team.name}"></td>
+                    <td>
+                        <select>
+                            <option th:each="team : ${project.team}"
+                                    th:text="${#strings.abbreviate(team.name,15)}"></option>
+                        </select>
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/teams/responsibleForProject/{id}(id=${team.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
+                    </td>
                     <td th:text="${project.customer.lastName}"></td>
                     <td>
                         <select>
