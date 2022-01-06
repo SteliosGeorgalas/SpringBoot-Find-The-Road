@@ -29,7 +29,11 @@ public class Project { // A generic item class either tangible or intangible. Al
 
     @DBRef
     @JsonManagedReference
-    private List<Team> team; // The list of teams currently working on the project.
+    private Team team; // The team currently working on the project.
+
+    @DBRef
+    @JsonManagedReference
+    private List<Comment> comments; // The list of comments  on the project.
 
     @DBRef
     @JsonManagedReference
@@ -46,6 +50,14 @@ public class Project { // A generic item class either tangible or intangible. Al
         this.description = description;
         this.price = price;
         this.dueDate = dueDate;
+    }
+
+    public Project(String title, String description, float price, String dueDate, Customer customer) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.dueDate = dueDate;
+        this.customer = customer;
     }
 
 }

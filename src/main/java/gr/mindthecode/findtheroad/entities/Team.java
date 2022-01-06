@@ -22,11 +22,10 @@ public class Team {
     private String id;
     private String name;
 
-    private Employee teamLeader; // The team's team leader, who should belong in the employeeList List below.
 
     @DBRef
     @JsonBackReference
-    private List<Project> projectList; // The team's project List currently active
+    private Project project; // The team's project List currently active
 
     @DBRef
     @JsonManagedReference

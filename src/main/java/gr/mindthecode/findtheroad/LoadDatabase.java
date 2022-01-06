@@ -21,6 +21,11 @@ public class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
+    public List<Team> updatedTeams = new ArrayList<>();
+    public List<Customer> updatedCustomers = new ArrayList<>();
+    public List<Project> updatedProjects = new ArrayList<>();
+
+
     private static final String[] personNames = new String[]{
             "Giannis",
             "Stelios",
@@ -85,10 +90,8 @@ public class LoadDatabase {
             "Smirnis",
     };
 
+
     private  static final String[] employeeRoles = new String[]{
-            "Project Manager",
-            "Product Owner",
-            "Team Lead",
             "Full-Stack Developer",
             "Front-end Developer",
             "Back-end Developer",
@@ -100,7 +103,7 @@ public class LoadDatabase {
 
 
     private static final String[] teamNamesNouns = new String[]{
-            "Departnament",
+            "Department",
             "Potato",
             "Attitude",
             "Marketing",
@@ -140,12 +143,18 @@ public class LoadDatabase {
     @Autowired
     CommentRepository commentRepository;
 
+    private  <T extends Customer> List<Project> generateRandomProjects(List<T> allCustomers) {
+        List<Project> projectList = new ArrayList<>();
+        allCustomers.forEach((n) -> projectList.addAll(generateRandomProjectsForEachCustomer(n)));
+        return projectList;
+    }
 
-    private static List<Project> generateRandomProjects() {
-        int count = getRandomUpperBound(50);
-        List<Project> projects = new ArrayList<>();
+    private  List<Project> generateRandomProjectsForEachCustomer(Customer customer) {
         Lorem lorem = LoremIpsum.getInstance();
-        for (int i = 0; i < count; i++) {
+        int projectCount = getRandomUpperBound(3);
+
+        List<Project> projects = new ArrayList<>();
+        for (int i = 0; i <= projectCount; i++) {
             String title = projectNames[getRandomUpperBound(projectNames.length)]
                     + " - " +
                     projectWork[getRandomUpperBound(projectWork.length)]
@@ -153,47 +162,57 @@ public class LoadDatabase {
                     projectType[getRandomUpperBound(projectType.length)];
 
             String description = lorem.getWords(5, 20);
-
-            projects.add(
-                    new Project(
-                            title,
-                            description,
-                            getRandomUpperBound(1500000),
-                            getDueDate()
-
-                    )
+            float price = getRandomUpperBound(1500000);
+            String dueDate = getDueDate();
+            Project p = new Project(
+                    title,
+                    description,
+                    price,
+                    dueDate,
+                    customer
             );
+            p.setCustomer(customer);
+            projects.add(p);
         }
+        customer.setProjectList(projects);
+        updatedCustomers.add(customer);
         return projects;
     }
 
-    private static List<Comment> generateRandomComments() {
-        int count = getRandomUpperBound(100) + 5;
+    private <T extends Project> List<Comment> generateRandomComments(List<T> allProjects) {
+        updatedProjects.clear();
+        List<Comment> totalComments= new ArrayList<>();
 
-        List<Comment> comments = new ArrayList<>();
-        Lorem lorem = LoremIpsum.getInstance();
-        for (int i = 0; i < count; i++) {
-            String comment = lorem.getWords(10, 20);
-            String date = getCommentDate();
-            comments.add(
-                    new Comment(
-                            comment,
-                            date
-                    )
-            );
+        for (Project  project: allProjects) {
+            List< Comment> comments = new ArrayList<>();
+            int count = 5;//getRandomUpperBound(5) + 3;
+            Lorem lorem = LoremIpsum.getInstance();
+            for (int i = 0; i < count; i++) {
+                Comment comment = new Comment ();
+                comment.setComment(lorem.getWords(10, 20));
+                comment.setDate(getCommentDate());
+
+                comments.add(comment);
+            }
+
+            project.setComments(comments);
+            updatedProjects.add(project);
+
+            totalComments.addAll(comments);
+
         }
-        return comments;
+        return totalComments;
     }
 
     private static List<Customer> generateRandomCustomers() {
-        int count = getRandomUpperBound(15) + 5;
+        int count = 5;// getRandomUpperBound(15) + 5;
 
         List<Customer> customers = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             String name = personNames[getRandomUpperBound(personNames.length)];
             String lastName = personLastNames[getRandomUpperBound(personLastNames.length)];
-            int age = getRandomUpperBound(80) + 20;
+            int age = getRandomUpperBound(40) + 20;
             customers.add(
                     new Customer(
                             name,
@@ -208,31 +227,90 @@ public class LoadDatabase {
         return customers;
     }
 
-    private static List<Employee> generateRandomEmployees() {
-        int count = getRandomUpperBound(15) + 5;
+    @EventListener(ApplicationReadyEvent.class)
+    public void deleteDatabase() {
+        //delete data
+        log.info("Deleting Customers"); customerRepository.deleteAll();
+        log.info("Deleting Projects");
+        projectRepository.deleteAll();
+        log.info("Deleting Teams");
+        teamRepository.deleteAll();
+        log.info("Deleting Employees");
+        employeeRepository.deleteAll();
+        log.info("Deleting Comments");
+        commentRepository.deleteAll();
 
-        List<Employee> employees = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
-            String name = personNames[getRandomUpperBound(personNames.length)];
-            String lastName = personLastNames[getRandomUpperBound(personLastNames.length)];
-            int age = getRandomUpperBound(80) + 20;
-            String role = employeeRoles[getRandomUpperBound(employeeRoles.length)];
-            employees.add(
-                    //firstName, lastName, age, address, email, personalPhoneNumber
-                    new Employee(
-                            name,
-                            lastName,
-                            age,
-                            (addresses[getRandomUpperBound(addresses.length)] + " " + getRandomUpperBound(100)),
-                            getEmailFromName(name, lastName),
-                            ("210" + getRandomUpperBound(60000000)),
-                            role
-                    )
-            );
-        }
-        return employees;
+        // initialize data
+        log.info("Preloading Customers");
+        customerRepository.saveAll(generateRandomCustomers());
+        log.info("Preloading Projects");
+        projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+        log.info("Updating Customers ");
+        customerRepository.saveAll(updatedCustomers);
+        log.info("Preloading Teams");
+        teamRepository.saveAll(generateRandomTeams(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
+        log.info("Preloading Employees");
+        employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+        log.info("Updating Teams");
+        teamRepository.saveAll(updatedTeams);
+        log.info("Preloading Comments");
+        commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
     }
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDatabase() {
+//        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
+//        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+//        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
+//        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
+//        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+//        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
+//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+//        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
+//
+//    }
+
+    private <T extends Team> List<Employee> generateRandomEmployees(List<T> allTeams) {
+
+        List<Employee> totalEmployees = new ArrayList<>();
+
+
+        for (Team team : allTeams) {
+
+            List<Employee> employees = new ArrayList<>();
+
+            int count = 5;//getRandomUpperBound(5) + 3;
+            for (int i = 0; i < count; i++) {
+                Employee employee = new Employee();
+                employee.setFirstName(personNames[getRandomUpperBound(personNames.length)]);
+                employee.setLastName(personLastNames[getRandomUpperBound(personLastNames.length)]);
+                //employee.setAge(getRandomUpperBound(80) + 20);
+                employee.setRole(employeeRoles[getRandomUpperBound(employeeRoles.length)]);
+                employee.setEmail(getEmailFromName(employee.getFirstName(),employee.getLastName()));
+                employee.setPersonalPhoneNumber(("210" + getRandomUpperBound(60000000)));
+
+                employee.setTeam(team);
+                employees.add(employee);
+            }
+            employees.get(getRandomUpperBound(count)).setRole("Project Manager");
+
+            team.setEmployeeList(employees);
+            updatedTeams.add(team);
+
+            totalEmployees.addAll(employees);
+
+        }
+
+        return totalEmployees;
+    }
+
+
+
 
     private static String getCommentDate() {
         String month = Integer.toString((getRandomUpperBound(11) + 1));
@@ -250,8 +328,26 @@ public class LoadDatabase {
         return (month + "/" + year);
     }
 
-    private static List<Team> generateRandomTeams() {
-        int count = getRandomUpperBound(15) + 5;
+
+    private <T extends Project> List<Team> generateRandomTeams(List<T> allProjects) {
+        List<Team> teamList = new ArrayList<>();
+        //allProjects.forEach((n) -> teamList.addAll(generateRandomTeamsForEachProject(n)));
+        allProjects.forEach((project) -> {
+            String teamName = teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                    + " - " +
+                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)];
+            Team team = new Team(teamName);
+            team.setProject(project);
+            project.setTeam(team);
+            updatedProjects.add(project);
+            teamList.add(team);
+        });
+        return teamList;
+    }
+
+    /*
+    private static <T extends Project> List<Team> generateRandomTeams() {
+        int count =2;// getRandomUpperBound(3) + 3;
 
         List<Team> teams = new ArrayList<>();
 
@@ -266,17 +362,7 @@ public class LoadDatabase {
         }
         return teams;
     }
-
-
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDatabase() {
-        log.info("Preloading " + customerRepository.saveAll(generateRandomCustomers()));
-        log.info("Preloading " + projectRepository.saveAll(generateRandomProjects()));
-        log.info("Preloading " + teamRepository.saveAll(generateRandomTeams()));
-        log.info("Preloading " + employeeRepository.saveAll(generateRandomEmployees()));
-        log.info("Preloading " + commentRepository.saveAll(generateRandomComments()));
-    }
+    */
 
     private static int getRandomUpperBound(int i) {
         return new Random().nextInt(i);
