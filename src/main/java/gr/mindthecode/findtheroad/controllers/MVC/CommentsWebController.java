@@ -3,6 +3,7 @@ package gr.mindthecode.findtheroad.controllers.MVC;
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.CommentSearchModel;
 import gr.mindthecode.findtheroad.entities.Comment;
 import gr.mindthecode.findtheroad.repositories.CommentRepository;
+import gr.mindthecode.findtheroad.repositories.ProjectRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +21,11 @@ import java.util.stream.IntStream;
 @Controller
 public class CommentsWebController {
     private final CommentRepository repository;
+    private ProjectRepository projectRepository;
 
-    CommentsWebController(CommentRepository repository) {
+    CommentsWebController(CommentRepository repository, ProjectRepository projectRepository) {
         this.repository = repository;
+        this.projectRepository = projectRepository;
     }
 
     @PostMapping("/comment")
@@ -86,6 +89,7 @@ public class CommentsWebController {
     @GetMapping("/comment/addcomment")
     public String addComment(Model model) {
         model.addAttribute("comment", new Comment());
+//    ForDropdown    model.addAttribute("projects", projectRepository.findAll());
         return "add-comment";
     }
 
@@ -116,7 +120,7 @@ public class CommentsWebController {
             comment.setId(id);
             return "update-comment";
         }
-        
+
         repository.save(comment);
         return "redirect:/comment";
     }

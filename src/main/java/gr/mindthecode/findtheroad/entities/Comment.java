@@ -29,4 +29,7 @@ public class Comment {
         this.date = date;
     }
 
+    public Comment(Project project) {
+        this.project = project;
+    }
 }

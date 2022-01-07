@@ -107,6 +107,7 @@
                     </td>
                     <td><a class="text-white" th:href="@{/projects/update/{id}(id=${project.id})}">Edit</a>
                         <a class="text-white" th:href="@{/projects/delete/{id}(id=${project.id})}">Delete</a>
+                        <a class="text-white" th:href="@{/projects/addcomment/{id}(id=${project.id})}">Leave Comment</a>
                     </td>
                 </tr>
                 </tbody>
@@ -163,7 +164,7 @@
         <h2 th:case="0">No Comments Found!</h2>
         <div th:case="*">
             <h2>Comments</h2>
-            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>
+<!--            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>-->
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>

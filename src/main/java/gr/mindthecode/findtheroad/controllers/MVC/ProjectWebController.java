@@ -1,5 +1,7 @@
 package gr.mindthecode.findtheroad.controllers.MVC;
 
+import gr.mindthecode.findtheroad.entities.Comment;
+import gr.mindthecode.findtheroad.repositories.CommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,15 +22,17 @@ import java.util.stream.IntStream;
 @Controller
 public class ProjectWebController {
     private final ProjectRepository repository;
+    private CommentRepository commRepository;
 
-    ProjectWebController(ProjectRepository repository) {
+    ProjectWebController(ProjectRepository repository, CommentRepository commRepository) {
         this.repository = repository;
+        this.commRepository = commRepository;
     }
 
     @PostMapping("/projects")
     public String searchProjectsSubmit(
             @ModelAttribute ProjectSearchModel searchModel) {
-                return "redirect:/projects?searchByTitle=" + searchModel.getTitle();
+        return "redirect:/projects?searchByTitle=" + searchModel.getTitle();
     }
 
     @GetMapping("/projects")
@@ -40,7 +44,8 @@ public class ProjectWebController {
     ) {
         if (page < 1) {
             return "redirect:/projects?size=" + size + "&page=1";
-        };
+        }
+        ;
 
         Page<Project> projects = findPaginated(
                 !searchByTitle.equals("") ?
@@ -52,11 +57,11 @@ public class ProjectWebController {
         int totalPages = projects.getTotalPages();
 
         if (totalPages > 0 && page > totalPages) {
-            return "redirect:/projects?size="+ size + "&page=" + totalPages;
+            return "redirect:/projects?size=" + size + "&page=" + totalPages;
         };
 
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page - 2), Math.min(page + 2, totalPages))
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -72,6 +77,16 @@ public class ProjectWebController {
     public String addProject(Model model) {
         model.addAttribute("project", new Project());
         return "add-project";
+    }
+
+    @GetMapping("/projects/addcomment/{id}")
+    public String addProjectComment(Model model, @PathVariable("id") String id) {
+        Project project = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
+
+        model.addAttribute("comment", new Comment(project));
+        model.addAttribute("project", project);
+        return "add-comment";
     }
 
     @PostMapping("/projects/addproject")
@@ -96,7 +111,7 @@ public class ProjectWebController {
 
     @PostMapping("/projects/update/{id}")
     public String updateProject(@PathVariable("id") String id, Project project,
-                            BindingResult result, Model model) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             project.setId(id);
             return "update-project";
@@ -132,7 +147,6 @@ public class ProjectWebController {
 
         return projectPage;
     }
-
 
 
 }
