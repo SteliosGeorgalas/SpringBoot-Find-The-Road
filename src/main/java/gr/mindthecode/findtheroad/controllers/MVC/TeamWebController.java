@@ -3,6 +3,7 @@ package gr.mindthecode.findtheroad.controllers.MVC;
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.EmployeeSearchModel;
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.TeamsSearchModel;
 import gr.mindthecode.findtheroad.entities.Employee;
+import gr.mindthecode.findtheroad.entities.Project;
 import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.TeamRepository;
 import org.springframework.data.domain.Page;
@@ -116,7 +117,11 @@ public class TeamWebController {
             team.setId(id);
             return "update-team";
         }
+        Team teamOld = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid team Id:" + id));
 
+        team.setEmployeeList(teamOld.getEmployeeList());
+        team.setProjectList(teamOld.getProjectList());
         repository.save(team);
         return "redirect:/teams";
     }

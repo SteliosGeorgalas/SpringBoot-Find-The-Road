@@ -10,13 +10,15 @@
     <div class="col-md-12" th:switch="${teams.totalElements}">
         <div th:case="0">
             <h2>No teams found!</h2>
-            <a type="button" class="btn btn-warning my-4" th:href="@{/api/teams/loadDB}">Press to load a database with random records</a>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/teams/loadDB}">Press to load a database with
+                random records</a>
         </div>
         <div th:case="*">
             <h2>Teams</h2>
-            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/teams/emptyDB}">Press to clear all data from database </a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/teams/emptyDB}">Press to clear all data
+                from database </a>
             <br>
-<!--            <a type="button" class="btn btn-success my-2" th:href="@{/teams/addteam}">Create New Team</a>-->
+            <!--            <a type="button" class="btn btn-success my-2" th:href="@{/teams/addteam}">Create New Team</a>-->
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -48,12 +50,17 @@
                         </select>
                         <a style="width: 40px; position: absolute" class="logo"
                            th:href="@{/employees/responsibleForTeam/{id}(id=${team.id})}">
-                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                            <img style="width: 40px" th:src="@{/logo/goto_logo.png}" alt="Logo picture">
                         </a>
                     </td>
-
-                    <td><a class="text-white" th:href="@{/teams/update/{id}(id=${team.id})}">Edit</a>
-                        <a class="text-white" th:href="@{/teams/delete/{id}(id=${team.id})}">Delete</a>
+                    <td>
+                        <a th:href="@{/teams/update/{id}(id=${team.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/edit-logo.png}">
+                        </a>
+                        <a th:href="@{/teams/delete/{id}(id=${team.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/x-logo.png}">
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -65,13 +72,15 @@
     <div class="col-md-12" th:switch="${projects.totalElements}">
         <div th:case="0">
             <h2>No Projects Found!</h2>
-            <a type="button" class="btn btn-warning my-4" th:href="@{/api/projects/loadDB}">Press to load a database with random records</a>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/projects/loadDB}">Press to load a database
+                with random records</a>
         </div>
         <div th:case="*">
             <h2>Projects</h2>
-            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/projects/emptyDB}">Press to clear all data from database </a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/projects/emptyDB}">Press to clear all
+                data from database </a>
             <br>
-<!--            <a class="btn btn-success my-2" th:href="@{/projects/addproject}">Create New Project</a>-->
+            <!--            <a class="btn btn-success my-2" th:href="@{/projects/addproject}">Create New Project</a>-->
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -111,12 +120,19 @@
                         </select>
                         <a style="width: 40px; position: absolute" class="logo"
                            th:href="@{/comments/responsibleForProject/{id}(id=${project.id})}">
-                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                            <img style="width: 40px" th:src="@{/logo/goto_logo.png}" alt="Logo picture">
                         </a>
                     </td>
-                    <td><a class="text-white" th:href="@{/projects/update/{id}(id=${project.id})}">Edit</a>
-                        <a class="text-white" th:href="@{/projects/delete/{id}(id=${project.id})}">Delete</a>
-                        <a class="text-white" th:href="@{/projects/addcomment/{id}(id=${project.id})}">Leave Comment</a>
+                    <td>
+                        <a th:href="@{/projects/update/{id}(id=${project.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/edit-logo.png}">
+                        </a>
+                        <a th:href="@{/projects/delete/{id}(id=${project.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/x-logo.png}">
+                        </a>
+                        <a th:href="@{/projects/addcomment/{id}(id=${project.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/comment-logo.png}">
+                        </a>
                     </td>
                 </tr>
                 </tbody>
@@ -131,13 +147,15 @@
     <div class="col-md-12" th:switch="${employee.totalElements}">
         <div th:case="0">
             <h2>No employees found!</h2>
-            <a type="button" class="btn btn-warning my-4" th:href="@{/api/employees/loadDB}">Press to load a database with random records</a>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/employees/loadDB}">Press to load a database
+                with random records</a>
         </div>
         <div th:case="*">
             <h2>Employees</h2>
-            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/employees/emptyDB}">Press to clear all data from database </a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/employees/emptyDB}">Press to clear all
+                data from database </a>
             <br>
-<!--            <a class="btn btn-success my-2" th:href="@{/employee/addemployee}">Create New Employee</a>-->
+            <!--            <a class="btn btn-success my-2" th:href="@{/employee/addemployee}">Create New Employee</a>-->
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -164,8 +182,14 @@
                     <td th:text="${pn.address}"></td>
                     <td th:text="${pn.email}"></td>
                     <td th:text="${pn.personalPhoneNumber}"></td>
-                    <td><a class="text-white" th:href="@{/employee/update/{id}(id=${pn.id})}">Edit</a>
-                        <a class="text-white" th:href="@{/employee/delete/{id}(id=${pn.id})}">Delete</a>
+                    <td>
+                        <a th:href="@{/employee/update/{id}(id=${pn.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/edit-logo.png}">
+                        </a>
+                        <a th:href="@{/employee/delete/{id}(id=${pn.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/x-logo.png}">
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -177,11 +201,13 @@
     <div class="col-md-12" th:switch="${comment.totalElements}">
         <div th:case="0">
             <h2>No comments found!</h2>
-            <a type="button" class="btn btn-warning my-4" th:href="@{/api/comments/loadDB}">Press to load a database with random records</a>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/comments/loadDB}">Press to load a database
+                with random records</a>
         </div>
         <div th:case="*">
             <h2>Comments</h2>
-            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/comments/emptyDB}">Press to clear all data from database </a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/comments/emptyDB}">Press to clear all
+                data from database </a>
             <br>
             <a class="btn btn-success my-2" th:href="@{/comment/addcomment}">Create New Comment</a>
             <table class="table table-dark table-striped">
@@ -197,13 +223,18 @@
                 <tbody>
                 <tr th:each="comm : ${comment.iterator()}">
                     <td th:text="${comm.id} "></td>
-<!--                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>-->
+                    <!--                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>-->
                     <td th:text="${comm.comment}"></td>
                     <td th:text="${comm.date}"></td>
-<!--                    <td th:text="${comm.project != null ? comm.project.title : 'NOT FOUND'}"> </td>-->
-<!--                    th:value="${user?.username}"-->
-                    <td><a class="text-white" th:href="@{/comment/update/{id}(id=${comm.id})}">Edit</a>
-                        <a class="text-white" th:href="@{/comment/delete/{id}(id=${comm.id})}">Delete</a>
+                    <!--                    <td th:text="${comm.project != null ? comm.project.title : 'NOT FOUND'}"> </td>-->
+                    <!--                    th:value="${user?.username}"-->
+                    <td>
+                        <a th:href="@{/comment/update/{id}(id=${comm.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/edit-logo.png}">
+                        </a>
+                        <a th:href="@{/comment/delete/{id}(id=${comm.id})}">
+                            <img style="width: 40px;" th:src="@{/logo/x-logo.png}">
+                        </a>
                     </td>
                 </tr>
                 </tbody>

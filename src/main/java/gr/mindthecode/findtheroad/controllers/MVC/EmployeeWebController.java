@@ -2,6 +2,7 @@ package gr.mindthecode.findtheroad.controllers.MVC;
 
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.EmployeeSearchModel;
 import gr.mindthecode.findtheroad.entities.Employee;
+import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -118,6 +119,10 @@ public class EmployeeWebController {
             return "update-employee";
         }
 
+        Employee employeeOld = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
+
+        employee.setTeam(employeeOld.getTeam());
         repository.save(employee);
         return "redirect:/employee";
     }
