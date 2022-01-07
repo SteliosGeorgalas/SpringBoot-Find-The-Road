@@ -19,7 +19,7 @@ services:
       SPRING_DATA_MONGODB_PORT: 27017
       SPRING_DATA_MONGODB_USERNAME: root
       SPRING_DATA_MONGODB_PASSWORD: root
-      SPRING_DATA_MONGODB_DATABASE: admin
+      SPRING_DATA_MONGODB_DATABASE: findtheroad-db
 
   mongoFTR:
     image: mongo
