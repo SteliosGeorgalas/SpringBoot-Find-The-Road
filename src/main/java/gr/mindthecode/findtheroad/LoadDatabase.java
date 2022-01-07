@@ -7,9 +7,7 @@ import gr.mindthecode.findtheroad.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +142,7 @@ public class LoadDatabase {
     @Autowired
     CommentRepository commentRepository;
 
+    /*
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         //delete data
@@ -174,19 +173,27 @@ public class LoadDatabase {
 
         log.info("Database setup completed");
     }
+*/
 
-    //    @EventListener(ApplicationReadyEvent.class)
-//    public void fillDatabase() {
-//        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
-//        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
-//        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
-//        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
-//        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
-//        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
-//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
-//        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
-//
-//    }
+    public void fillDatabase() {
+        log.info("Preloading Customers");
+        customerRepository.saveAll(generateRandomCustomers());
+        log.info("Preloading Projects");
+        projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+        log.info("Updating Customers ");
+        customerRepository.saveAll(updatedCustomers);
+        log.info("Preloading Teams");
+        teamRepository.saveAll(generateRandomTeams());
+        log.info("Preloading Employees");
+        employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+        log.info("Updating Teams");
+        teamRepository.saveAll(updatedTeams);
+        log.info("Preloading Comments");
+        commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
+    }
+
     private static List<Customer> generateRandomCustomers() {
         int count = 1;
 
