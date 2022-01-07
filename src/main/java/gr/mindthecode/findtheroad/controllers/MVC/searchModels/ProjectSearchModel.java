@@ -12,4 +12,5 @@ import org.springframework.stereotype.Component;
 public class ProjectSearchModel {
     private String title;
 
+    private String teamId;
 }

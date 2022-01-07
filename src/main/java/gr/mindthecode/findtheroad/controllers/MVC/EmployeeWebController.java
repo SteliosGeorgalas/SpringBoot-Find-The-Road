@@ -35,7 +35,6 @@ public class EmployeeWebController {
     public String searchEmployeeId(@PathVariable("id") String id,
             @ModelAttribute EmployeeSearchModel searchModel) {
 
-        System.out.println("Testefe" + searchModel + " gregerbTest !!! " + id);
         return "redirect:/employee?searchByTeamId=" + id;
     }
 

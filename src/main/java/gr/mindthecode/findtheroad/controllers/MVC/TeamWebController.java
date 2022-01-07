@@ -1,6 +1,8 @@
 package gr.mindthecode.findtheroad.controllers.MVC;
 
+import gr.mindthecode.findtheroad.controllers.MVC.searchModels.EmployeeSearchModel;
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.TeamsSearchModel;
+import gr.mindthecode.findtheroad.entities.Employee;
 import gr.mindthecode.findtheroad.entities.Team;
 import gr.mindthecode.findtheroad.repositories.TeamRepository;
 import org.springframework.data.domain.Page;
@@ -37,17 +39,22 @@ public class TeamWebController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String searchByName
+            @RequestParam(defaultValue = "") String searchByName,
+            @RequestParam(defaultValue = "") String searchByProjectId
     ) {
         if (page < 1) {
             return "redirect:/teams?size=" + size + "&page=1";
-        }
-        ;
+        };
 
-        Page<Team> teams = findPaginated(
-                !searchByName.equals("") ?
-                        repository.findByNameStartingWith(searchByName) :
-                        repository.findAll(),
+        List<Team> teamList = repository.findAll();
+        if (!searchByProjectId.equals("")) {
+            teamList = repository.findByProjectListIn(searchByProjectId);
+        } else if (!searchByName.equals("")) {
+            teamList = repository.findByNameStartingWith(searchByName);
+        }
+
+
+        Page<Team> teams = findPaginated(teamList,
                 PageRequest.of(page - 1, size)
         );
 
@@ -67,7 +74,7 @@ public class TeamWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("teams", teams);
-        model.addAttribute("searchModel", new TeamsSearchModel(searchByName));
+        model.addAttribute("searchModel", new TeamsSearchModel(searchByName, searchByProjectId));
         return "teams";
     }
 
@@ -88,6 +95,10 @@ public class TeamWebController {
         return "redirect:/teams";
     }
 
+    @GetMapping("/teams/responsibleForProject/{id}")
+    public String searchProjectId(@PathVariable("id") String id) {
+        return "redirect:/teams?searchByProjectId=" + id;
+    }
 
     @GetMapping("/teams/update/{id}")
     public String updateTeam(@PathVariable("id") String id, Model model) {
