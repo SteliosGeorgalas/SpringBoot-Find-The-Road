@@ -40,7 +40,7 @@ public class TeamWebController {
             @RequestParam(defaultValue = "") String searchByName
     ) {
         if (page < 1) {
-            return "redirect:/teams?page=1&size=" + size;
+            return "redirect:/teams?size=" + size + "&page=1";
         }
         ;
 

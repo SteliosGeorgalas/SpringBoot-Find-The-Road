@@ -48,7 +48,7 @@ public class EmployeeWebController {
             @RequestParam(defaultValue = "") String searchByTeamId
     ) {
         if (page < 1) {
-            return "redirect:/employee?page=1&size=" + size;
+            return "redirect:/employee?size=" + size + "&page=1";
         }
         ;
 

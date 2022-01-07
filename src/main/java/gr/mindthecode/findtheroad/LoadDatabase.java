@@ -175,17 +175,27 @@ public class LoadDatabase {
         log.info("Database setup completed");
     }
 
-    //    @EventListener(ApplicationReadyEvent.class)
 //    public void fillDatabase() {
+//
+//        // initialize data
 //        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
 //        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
-//        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
+//        log.info("Connecting Customers with Projects"); customerRepository.saveAll(updatedCustomers);
+//
 //        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
 //        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
-//        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
-//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
-//        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
+//        log.info("Connecting Teams with Employees");  teamRepository.saveAll(updatedTeams);
 //
+//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+//        log.info("Connecting Projects with Comments");  projectRepository.saveAll(updatedProjects);
+//
+//        log.info("Connecting Teams with Projects");
+//        updatedTeams.clear(); updatedProjects = projectRepository.findAll();
+//        MatchTeamWithProjects(teamRepository.findAll(),updatedProjects);
+//        MatchProjectWithTeams(updatedTeams,updatedProjects);
+//        updateTeamsAndProjects();
+//
+//        log.info("Database setup completed");
 //    }
     private static List<Customer> generateRandomCustomers() {
         int count = 1;
@@ -250,14 +260,15 @@ public class LoadDatabase {
         List<Comment> totalComments= new ArrayList<>();
 
         for (Project  project: allProjects) {
-            List< Comment> comments = new ArrayList<>();
+            List<Comment> comments = new ArrayList<>();
             int count = 5;//getRandomUpperBound(5) + 3;
             Lorem lorem = LoremIpsum.getInstance();
             for (int i = 0; i < count; i++) {
                 Comment comment = new Comment ();
                 comment.setComment(lorem.getWords(10, 20));
                 comment.setDate(getCommentDate());
-
+                comment.setProject(project);
+                
                 comments.add(comment);
             }
 

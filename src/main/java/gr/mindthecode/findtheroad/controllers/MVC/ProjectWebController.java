@@ -39,7 +39,7 @@ public class ProjectWebController {
             @RequestParam(defaultValue = "") String searchByTitle
     ) {
         if (page < 1) {
-            return "redirect:/projects?page=1&size="+ size;
+            return "redirect:/projects?size=" + size + "&page=1";
         };
 
         Page<Project> projects = findPaginated(

@@ -33,7 +33,7 @@ public class CommentsWebController {
 
     @GetMapping("/comments/responsibleForProject/{id}")
     public String searchCommentId(@PathVariable("id") String id,
-            @ModelAttribute CommentSearchModel searchModel) {
+                                  @ModelAttribute CommentSearchModel searchModel) {
         return "redirect:/comment?searchByProjectId=" + id;
     }
 
@@ -42,19 +42,19 @@ public class CommentsWebController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String searchByLastName,
-            @RequestParam(defaultValue = "") String searchByCommentId
+            @RequestParam(defaultValue = "") String searchByComment,
+            @RequestParam(defaultValue = "") String searchByProjectId
     ) {
         if (page < 1) {
-            return "redirect:/comment?page=1&size=" + size;
+            return "redirect:/comment?size=" + size + "&page=1";
         }
         ;
 
         List<Comment> commentList = repository.findAll();
-        if (!searchByCommentId.equals("")) {
-            commentList = repository.findCustomByProjectId(searchByCommentId);
-        } else if (!searchByLastName.equals("")) {
-            commentList = repository.findByComment(searchByLastName);
+        if (!searchByProjectId.equals("")) {
+            commentList = repository.findCustomByProjectId(searchByProjectId);
+        } else if (!searchByComment.equals("")) {
+            commentList = repository.findByComment(searchByComment);
         }
 
         Page<Comment> comment = findPaginated(
@@ -78,7 +78,7 @@ public class CommentsWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("comment", comment);
-        model.addAttribute("searchModel", new CommentSearchModel(searchByLastName, searchByCommentId));
+        model.addAttribute("searchModel", new CommentSearchModel(searchByComment, searchByProjectId));
 //        model.addAttribute("searchModel", new CommentSearchModel(searchById));
         return "comment";
     }
@@ -111,12 +111,12 @@ public class CommentsWebController {
 
     @PostMapping("/comment/update/{id}")
     public String updateComment(@PathVariable("id") String id, Comment comment,
-                                 BindingResult result, Model model) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             comment.setId(id);
             return "update-comment";
         }
-
+        
         repository.save(comment);
         return "redirect:/comment";
     }

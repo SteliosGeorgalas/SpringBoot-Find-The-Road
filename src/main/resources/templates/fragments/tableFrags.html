@@ -170,16 +170,17 @@
                     <th># Id</th>
                     <th>Comment</th>
                     <th>Date</th>
-                    <th>Project</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="comm : ${comment.iterator()}">
-                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>
+                    <td th:text="${comm.id} "></td>
+<!--                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>-->
                     <td th:text="${comm.comment}"></td>
                     <td th:text="${comm.date}"></td>
-                    <td th:text="${comm.project}"></td>
+<!--                    <td th:text="${comm.project != null ? comm.project.title : 'NOT FOUND'}"> </td>-->
+<!--                    th:value="${user?.username}"-->
                     <td><a class="text-white" th:href="@{/comment/update/{id}(id=${comm.id})}">Edit</a>
                         <a class="text-white" th:href="@{/comment/delete/{id}(id=${comm.id})}">Delete</a>
                     </td>
