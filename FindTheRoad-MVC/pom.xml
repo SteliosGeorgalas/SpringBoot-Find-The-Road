@@ -44,6 +44,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>gr.mindthecode</groupId>
+            <artifactId>FindTheRoad-MVC</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
         </dependency>
