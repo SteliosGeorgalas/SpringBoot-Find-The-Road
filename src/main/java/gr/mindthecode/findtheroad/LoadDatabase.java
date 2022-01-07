@@ -144,6 +144,7 @@ public class LoadDatabase {
     @Autowired
     CommentRepository commentRepository;
 
+    /*
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         //delete data
@@ -174,29 +175,50 @@ public class LoadDatabase {
 
         log.info("Database setup completed");
     }
+*/
+    @EventListener(ApplicationReadyEvent.class)
+    public void restoreDatabase() {
+        //delete data
+        log.info("Deleting Customers"); customerRepository.deleteAll();
+        log.info("Deleting Projects");  projectRepository.deleteAll();
+        log.info("Deleting Teams"); teamRepository.deleteAll();
+        log.info("Deleting Employees"); employeeRepository.deleteAll();
+        log.info("Deleting Comments"); commentRepository.deleteAll();
+    }
 
-//    public void fillDatabase() {
-//
-//        // initialize data
-//        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
-//        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
-//        log.info("Connecting Customers with Projects"); customerRepository.saveAll(updatedCustomers);
-//
-//        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
-//        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
-//        log.info("Connecting Teams with Employees");  teamRepository.saveAll(updatedTeams);
-//
-//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
-//        log.info("Connecting Projects with Comments");  projectRepository.saveAll(updatedProjects);
-//
-//        log.info("Connecting Teams with Projects");
-//        updatedTeams.clear(); updatedProjects = projectRepository.findAll();
-//        MatchTeamWithProjects(teamRepository.findAll(),updatedProjects);
-//        MatchProjectWithTeams(updatedTeams,updatedProjects);
-//        updateTeamsAndProjects();
-//
-//        log.info("Database setup completed");
-//    }
+    public void fillDatabase() {
+        log.info("Preloading Customers");
+        customerRepository.saveAll(generateRandomCustomers());
+        log.info("Preloading Projects");
+        projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+        log.info("Updating Customers ");
+        customerRepository.saveAll(updatedCustomers);
+        log.info("Preloading Teams");
+        teamRepository.saveAll(generateRandomTeams());
+        log.info("Preloading Employees");
+        employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+        log.info("Updating Teams");
+        teamRepository.saveAll(updatedTeams);
+        log.info("Preloading Comments");
+        commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Updating Projects");
+        projectRepository.saveAll(updatedProjects);
+    }
+
+    public void clearDatabase() {
+        //delete data
+        log.info("Deleting Customers");
+        customerRepository.deleteAll();
+        log.info("Deleting Projects");
+        projectRepository.deleteAll();
+        log.info("Deleting Teams");
+        teamRepository.deleteAll();
+        log.info("Deleting Employees");
+        employeeRepository.deleteAll();
+        log.info("Deleting Comments");
+        commentRepository.deleteAll();
+    }
+
     private static List<Customer> generateRandomCustomers() {
         int count = 1;
 
@@ -268,7 +290,7 @@ public class LoadDatabase {
                 comment.setComment(lorem.getWords(10, 20));
                 comment.setDate(getCommentDate());
                 comment.setProject(project);
-                
+
                 comments.add(comment);
             }
 
