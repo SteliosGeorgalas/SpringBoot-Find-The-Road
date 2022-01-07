@@ -7,7 +7,9 @@ import gr.mindthecode.findtheroad.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,6 +176,15 @@ public class LoadDatabase {
         log.info("Database setup completed");
     }
 */
+    @EventListener(ApplicationReadyEvent.class)
+    public void restoreDatabase() {
+        //delete data
+        log.info("Deleting Customers"); customerRepository.deleteAll();
+        log.info("Deleting Projects");  projectRepository.deleteAll();
+        log.info("Deleting Teams"); teamRepository.deleteAll();
+        log.info("Deleting Employees"); employeeRepository.deleteAll();
+        log.info("Deleting Comments"); commentRepository.deleteAll();
+    }
 
     public void fillDatabase() {
         log.info("Preloading Customers");
@@ -192,6 +203,20 @@ public class LoadDatabase {
         commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
         log.info("Updating Projects");
         projectRepository.saveAll(updatedProjects);
+    }
+
+    public void clearDatabase() {
+        //delete data
+        log.info("Deleting Customers");
+        customerRepository.deleteAll();
+        log.info("Deleting Projects");
+        projectRepository.deleteAll();
+        log.info("Deleting Teams");
+        teamRepository.deleteAll();
+        log.info("Deleting Employees");
+        employeeRepository.deleteAll();
+        log.info("Deleting Comments");
+        commentRepository.deleteAll();
     }
 
     private static List<Customer> generateRandomCustomers() {

@@ -8,10 +8,15 @@
 
 <div id="teams-list" class="row" th:fragment="teamsTable">
     <div class="col-md-12" th:switch="${teams.totalElements}">
-        <h2 th:case="0">No teams found!</h2>
+        <div th:case="0">
+            <h2>No teams found!</h2>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/teams/loadDB}">Press to load a database with random records</a>
+        </div>
         <div th:case="*">
             <h2>Teams</h2>
-            <a style="position: absolute" th:href="@{/teams/addteam}">Create New Team</a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/teams/emptyDB}">Press to clear all data from database </a>
+            <br>
+            <a type="button" class="btn btn-success my-2" th:href="@{/teams/addteam}">Create New Team</a>
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -58,10 +63,15 @@
 
 <div id="project-list" class="row" th:fragment="projectTable">
     <div class="col-md-12" th:switch="${projects.totalElements}">
-        <h2 th:case="0">No Projects Found!</h2>
+        <div th:case="0">
+            <h2>No Projects Found!</h2>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/projects/loadDB}">Press to load a database with random records</a>
+        </div>
         <div th:case="*">
             <h2>Projects</h2>
-            <a style="position: absolute" th:href="@{/projects/addproject}">Create New Project</a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/projects/emptyDB}">Press to clear all data from database </a>
+            <br>
+            <a class="btn btn-success my-2" th:href="@{/projects/addproject}">Create New Project</a>
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -119,10 +129,15 @@
 
 <div id="employee-list" class="row" th:fragment="employeeTable">
     <div class="col-md-12" th:switch="${employee.totalElements}">
-        <h2 th:case="0">No employees found!</h2>
+        <div th:case="0">
+            <h2>No employees found!</h2>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/employees/loadDB}">Press to load a database with random records</a>
+        </div>
         <div th:case="*">
             <h2>Employees</h2>
-            <a style="position: absolute" th:href="@{/employee/addemployee}">Create New Employee</a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/employees/emptyDB}">Press to clear all data from database </a>
+            <br>
+            <a class="btn btn-success my-2" th:href="@{/employee/addemployee}">Create New Employee</a>
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
@@ -160,10 +175,15 @@
 
 <div id="comment-list" class="row" th:fragment="commentTable">
     <div class="col-md-12" th:switch="${comment.totalElements}">
-        <h2 th:case="0">No Comments Found!</h2>
+        <div th:case="0">
+            <h2>No comments found!</h2>
+            <a type="button" class="btn btn-warning my-4" th:href="@{/api/comments/loadDB}">Press to load a database with random records</a>
+        </div>
         <div th:case="*">
             <h2>Comments</h2>
-            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>
+            <a type="button" class="btn btn-primary mt-4 mb-2" th:href="@{/api/comments/emptyDB}">Press to clear all data from database </a>
+            <br>
+            <a class="btn btn-success my-2" th:href="@{/comment/addcomment}">Create New Comment</a>
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
