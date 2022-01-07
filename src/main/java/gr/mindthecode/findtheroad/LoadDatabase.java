@@ -282,13 +282,14 @@ public class LoadDatabase {
         List<Comment> totalComments= new ArrayList<>();
 
         for (Project  project: allProjects) {
-            List< Comment> comments = new ArrayList<>();
+            List<Comment> comments = new ArrayList<>();
             int count = 5;//getRandomUpperBound(5) + 3;
             Lorem lorem = LoremIpsum.getInstance();
             for (int i = 0; i < count; i++) {
                 Comment comment = new Comment ();
                 comment.setComment(lorem.getWords(10, 20));
                 comment.setDate(getCommentDate());
+                comment.setProject(project);
 
                 comments.add(comment);
             }
