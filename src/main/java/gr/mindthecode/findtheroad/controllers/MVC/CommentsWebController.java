@@ -3,6 +3,7 @@ package gr.mindthecode.findtheroad.controllers.MVC;
 import gr.mindthecode.findtheroad.controllers.MVC.searchModels.CommentSearchModel;
 import gr.mindthecode.findtheroad.entities.Comment;
 import gr.mindthecode.findtheroad.repositories.CommentRepository;
+import gr.mindthecode.findtheroad.repositories.ProjectRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +21,11 @@ import java.util.stream.IntStream;
 @Controller
 public class CommentsWebController {
     private final CommentRepository repository;
+    private ProjectRepository projectRepository;
 
-    CommentsWebController(CommentRepository repository) {
+    CommentsWebController(CommentRepository repository, ProjectRepository projectRepository) {
         this.repository = repository;
+        this.projectRepository = projectRepository;
     }
 
     @PostMapping("/comment")
@@ -33,7 +36,7 @@ public class CommentsWebController {
 
     @GetMapping("/comments/responsibleForProject/{id}")
     public String searchCommentId(@PathVariable("id") String id,
-            @ModelAttribute CommentSearchModel searchModel) {
+                                  @ModelAttribute CommentSearchModel searchModel) {
         return "redirect:/comment?searchByProjectId=" + id;
     }
 
@@ -42,19 +45,19 @@ public class CommentsWebController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String searchByLastName,
-            @RequestParam(defaultValue = "") String searchByCommentId
+            @RequestParam(defaultValue = "") String searchByComment,
+            @RequestParam(defaultValue = "") String searchByProjectId
     ) {
         if (page < 1) {
-            return "redirect:/comment?page=1&size=" + size;
+            return "redirect:/comment?size=" + size + "&page=1";
         }
         ;
 
         List<Comment> commentList = repository.findAll();
-        if (!searchByCommentId.equals("")) {
-            commentList = repository.findCustomByProjectId(searchByCommentId);
-        } else if (!searchByLastName.equals("")) {
-            commentList = repository.findByComment(searchByLastName);
+        if (!searchByProjectId.equals("")) {
+            commentList = repository.findCustomByProjectId(searchByProjectId);
+        } else if (!searchByComment.equals("")) {
+            commentList = repository.findByComment(searchByComment);
         }
 
         Page<Comment> comment = findPaginated(
@@ -78,7 +81,7 @@ public class CommentsWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("comment", comment);
-        model.addAttribute("searchModel", new CommentSearchModel(searchByLastName, searchByCommentId));
+        model.addAttribute("searchModel", new CommentSearchModel(searchByComment, searchByProjectId));
 //        model.addAttribute("searchModel", new CommentSearchModel(searchById));
         return "comment";
     }
@@ -86,6 +89,7 @@ public class CommentsWebController {
     @GetMapping("/comment/addcomment")
     public String addComment(Model model) {
         model.addAttribute("comment", new Comment());
+//    ForDropdown    model.addAttribute("projects", projectRepository.findAll());
         return "add-comment";
     }
 
@@ -111,7 +115,7 @@ public class CommentsWebController {
 
     @PostMapping("/comment/update/{id}")
     public String updateComment(@PathVariable("id") String id, Comment comment,
-                                 BindingResult result, Model model) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             comment.setId(id);
             return "update-comment";

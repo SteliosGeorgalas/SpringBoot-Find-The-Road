@@ -31,10 +31,10 @@
                             <option th:each="project : ${team.projectList}"
                                     th:text="${project.title}"></option>
                         </select>
-<!--                        <a style="width: 40px; position: absolute" class="logo"-->
-<!--                           th:href="@{/project/responsibleForTeam/{id}(id=${project.id})}">-->
-<!--                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">-->
-<!--                        </a>-->
+                        <a style="width: 40px; position: absolute" class="logo"
+                           th:href="@{/projects/responsibleForTeam/{id}(id=${team.id})}">
+                            <img style="width: 40px" src="../../static/logo/goto_logo.png" alt="Logo picture">
+                        </a>
                     </td>
                     <td>
                         <select>
@@ -79,8 +79,7 @@
                 <tbody>
                 <tr th:each="project : ${projects.iterator()}">
                     <td th:text="${#strings.abbreviate(project.id,15)} "></td>
-                    <td><a th:text="${#strings.abbreviate(project.title,15)}"
-                           th:href="@{/teams/responsiblefor/{id}(id=${project.id})}"></a></td>
+                    <td><a th:text="${#strings.abbreviate(project.title,15)}"></a></td>
                     <td th:text="${#strings.abbreviate(project.description,15)} "></td>
                     <td th:text="${#numbers.formatDecimal(project.price, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${project.dueDate}"></td>
@@ -107,6 +106,7 @@
                     </td>
                     <td><a class="text-white" th:href="@{/projects/update/{id}(id=${project.id})}">Edit</a>
                         <a class="text-white" th:href="@{/projects/delete/{id}(id=${project.id})}">Delete</a>
+                        <a class="text-white" th:href="@{/projects/addcomment/{id}(id=${project.id})}">Leave Comment</a>
                     </td>
                 </tr>
                 </tbody>
@@ -163,23 +163,24 @@
         <h2 th:case="0">No Comments Found!</h2>
         <div th:case="*">
             <h2>Comments</h2>
-            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>
+<!--            <a style="position: absolute" th:href="@{/comment/addcomment}">Create New Comment</a>-->
             <table class="table table-dark table-striped">
                 <thead style="height: 60px">
                 <tr>
                     <th># Id</th>
                     <th>Comment</th>
                     <th>Date</th>
-                    <th>Project</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="comm : ${comment.iterator()}">
-                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>
+                    <td th:text="${comm.id} "></td>
+<!--                    <td th:text="${#strings.abbreviate(comm.id,15)} "></td>-->
                     <td th:text="${comm.comment}"></td>
                     <td th:text="${comm.date}"></td>
-                    <td th:text="${comm.project}"></td>
+<!--                    <td th:text="${comm.project != null ? comm.project.title : 'NOT FOUND'}"> </td>-->
+<!--                    th:value="${user?.username}"-->
                     <td><a class="text-white" th:href="@{/comment/update/{id}(id=${comm.id})}">Edit</a>
                         <a class="text-white" th:href="@{/comment/delete/{id}(id=${comm.id})}">Delete</a>
                     </td>

@@ -35,7 +35,6 @@ public class EmployeeWebController {
     public String searchEmployeeId(@PathVariable("id") String id,
             @ModelAttribute EmployeeSearchModel searchModel) {
 
-        System.out.println("Testefe" + searchModel + " gregerbTest !!! " + id);
         return "redirect:/employee?searchByTeamId=" + id;
     }
 
@@ -48,7 +47,7 @@ public class EmployeeWebController {
             @RequestParam(defaultValue = "") String searchByTeamId
     ) {
         if (page < 1) {
-            return "redirect:/employee?page=1&size=" + size;
+            return "redirect:/employee?size=" + size + "&page=1";
         }
         ;
 

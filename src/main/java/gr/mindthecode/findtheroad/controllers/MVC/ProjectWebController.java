@@ -1,5 +1,9 @@
 package gr.mindthecode.findtheroad.controllers.MVC;
 
+import gr.mindthecode.findtheroad.controllers.MVC.searchModels.EmployeeSearchModel;
+import gr.mindthecode.findtheroad.entities.Comment;
+import gr.mindthecode.findtheroad.entities.Team;
+import gr.mindthecode.findtheroad.repositories.CommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,7 +33,7 @@ public class ProjectWebController {
     @PostMapping("/projects")
     public String searchProjectsSubmit(
             @ModelAttribute ProjectSearchModel searchModel) {
-                return "redirect:/projects?searchByTitle=" + searchModel.getTitle();
+        return "redirect:/projects?searchByTitle=" + searchModel.getTitle();
     }
 
     @GetMapping("/projects")
@@ -36,27 +41,34 @@ public class ProjectWebController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String searchByTitle
+            @RequestParam(defaultValue = "") String searchByTitle,
+            @RequestParam(defaultValue = "") String searchByTeamId
+
     ) {
         if (page < 1) {
-            return "redirect:/projects?page=1&size="+ size;
+            return "redirect:/projects?size=" + size + "&page=1";
         };
 
+
+        List<Project> projectList = repository.findAll();
+        if (!searchByTeamId.equals("")) {
+            projectList = repository.findByTeamListIn(searchByTeamId);
+        } else if (!searchByTitle.equals("")) {
+            projectList = repository.findByTitleStartingWith(searchByTitle);
+        }
         Page<Project> projects = findPaginated(
-                !searchByTitle.equals("") ?
-                        repository.findByTitleStartingWith(searchByTitle) :
-                        repository.findAll(),
+                projectList,
                 PageRequest.of(page - 1, size)
         );
 
         int totalPages = projects.getTotalPages();
 
         if (totalPages > 0 && page > totalPages) {
-            return "redirect:/projects?size="+ size + "&page=" + totalPages;
+            return "redirect:/projects?size=" + size + "&page=" + totalPages;
         };
 
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page-2), Math.min(page + 2, totalPages))
+            List<Integer> pageNumbers = IntStream.rangeClosed(Math.max(1, page - 2), Math.min(page + 2, totalPages))
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -64,7 +76,7 @@ public class ProjectWebController {
 
         model.addAttribute("page", page);
         model.addAttribute("projects", projects);
-        model.addAttribute("searchModel", new ProjectSearchModel(searchByTitle));
+        model.addAttribute("searchModel", new ProjectSearchModel(searchByTitle, searchByTeamId));
         return "projects";
     }
 
@@ -72,6 +84,21 @@ public class ProjectWebController {
     public String addProject(Model model) {
         model.addAttribute("project", new Project());
         return "add-project";
+    }
+
+    @GetMapping("/projects/responsibleForTeam/{id}")
+    public String searchTeamIds(@PathVariable("id") String id) {
+        return "redirect:/projects?searchByTeamId=" + id;
+    }
+
+    @GetMapping("/projects/addcomment/{id}")
+    public String addProjectComment(Model model, @PathVariable("id") String id) {
+        Project project = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
+
+        model.addAttribute("comment", new Comment(project));
+        model.addAttribute("project", project);
+        return "add-comment";
     }
 
     @PostMapping("/projects/addproject")
@@ -96,12 +123,17 @@ public class ProjectWebController {
 
     @PostMapping("/projects/update/{id}")
     public String updateProject(@PathVariable("id") String id, Project project,
-                            BindingResult result, Model model) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             project.setId(id);
             return "update-project";
         }
+        Project projectOld = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
 
+        project.setTeamList(projectOld.getTeamList());
+        project.setCustomer(projectOld.getCustomer());
+        project.setComments(projectOld.getComments());
         repository.save(project);
         return "redirect:/projects";
     }
@@ -132,7 +164,6 @@ public class ProjectWebController {
 
         return projectPage;
     }
-
 
 
 }
