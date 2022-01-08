@@ -1,24 +1,3 @@
-<div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -34,37 +13,19 @@
   </p>
 </div>
 
+# Table of contents
 
+- [About The Project](#about-the-project)
+    - [The Technologies](#the-technologies)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Launch](#launch)
+- [Usage](#usage)
+- [License](#license)
+- [Team Members](#team-members)
+- [Contact](#contact)
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
+****<!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
@@ -81,20 +42,15 @@ overwhelming very quickly, so here's where Find the Road comes in!
 ### The Technologies
 
 #### Front-End:
-
 *JavaScript*, *HTML*,*CSS*
 
 #### Back-End:
-
-*Java 11*
-*MongoDB*
+*Java 11*, *MongoDB*
 
 #### Build System:
-
 *Maven*
 
 #### Frameworks:
-
 *Spring Boot*
 
 *Spring Security*
@@ -114,7 +70,6 @@ We use Docker for containerization, and Docker-compose for deployment.
 
 
 <!-- GETTING STARTED -->
-
 ## Getting Started
 
 ### Prerequisites
@@ -136,8 +91,7 @@ pull the latest mongodb image, so no need to install it manually.
 
 
 <!-- USAGE EXAMPLES -->
-
-## Usage
+### Usage
 
 You may explore the application by navigating to localhost:8080 on your browser. You will be asked for username and
 password. Use "user" and "password" respectively.
@@ -163,7 +117,6 @@ You may now use the blue button generated now to clear the database entirely.
 
 
 <!-- LICENSE -->
-
 ## License
 
 Distributed under the Apache 2.0 license.
@@ -174,7 +127,6 @@ Distributed under the Apache 2.0 license.
 <!-- TEAM MEMBERS -->
 
 ## Team Members
-
 Stelios Georgalas
 
 Evangelos Poulios
@@ -188,10 +140,9 @@ Evangelos Tsagkournis
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTACT -->
-
 ## Contact
 
 Project Link:
 [https://github.com/SteliosGeorgalas/SpringBoot-Find-The-Road](https://github.com/SteliosGeorgalas/SpringBoot-Find-The-Road)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>****
