@@ -23,7 +23,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/**/*.js", "/**/*.css", "swagger-ui/").permitAll()
+                .antMatchers("/**/*.js", "/**/*.css").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -32,11 +32,12 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
-                .and()
-                .rememberMe()
-                .rememberMeParameter("remember_me")
-                .tokenValiditySeconds(7 * 24 * 60 * 60) // expiration time: 7 days
-                .key(UUid)
+//                .and()
+//                .rememberMe()
+//                .rememberMeCookieName("rememberMe")
+//                .rememberMeParameter("remember_me")
+//                .tokenValiditySeconds(7 * 24 * 60 * 60) // expiration time: 7 days
+//                .key(UUid)
                 .and()
                 .logout()
                 .permitAll();
