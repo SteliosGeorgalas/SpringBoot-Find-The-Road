@@ -144,7 +144,7 @@ public class LoadDatabase {
     @Autowired
     CommentRepository commentRepository;
 
-    /*
+
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         //delete data
@@ -175,16 +175,16 @@ public class LoadDatabase {
 
         log.info("Database setup completed");
     }
-*/
-    @EventListener(ApplicationReadyEvent.class)
-    public void restoreDatabase() {
-        //delete data
-        log.info("Deleting Customers"); customerRepository.deleteAll();
-        log.info("Deleting Projects");  projectRepository.deleteAll();
-        log.info("Deleting Teams"); teamRepository.deleteAll();
-        log.info("Deleting Employees"); employeeRepository.deleteAll();
-        log.info("Deleting Comments"); commentRepository.deleteAll();
-    }
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void restoreDatabase() {
+//        //delete data
+//        log.info("Deleting Customers"); customerRepository.deleteAll();
+//        log.info("Deleting Projects");  projectRepository.deleteAll();
+//        log.info("Deleting Teams"); teamRepository.deleteAll();
+//        log.info("Deleting Employees"); employeeRepository.deleteAll();
+//        log.info("Deleting Comments"); commentRepository.deleteAll();
+//    }
 
     public void fillDatabase() {
         log.info("Preloading Customers");
@@ -368,16 +368,16 @@ public class LoadDatabase {
     }
 
     private static  List<Team> generateRandomTeams() {
-            List<Team> teams = new ArrayList<>();
+        List<Team> teams = new ArrayList<>();
 
-            int count =getRandomUpperBound(5) + 3;
-            for (int i = 0; i < count; i++) {
-                Team team = new Team();
-                team.setName(teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
-                        + " - " +
-                        teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)]);
-                teams.add(team);
-            }
+        int count =getRandomUpperBound(5) + 3;
+        for (int i = 0; i < count; i++) {
+            Team team = new Team();
+            team.setName(teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                    + " - " +
+                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)]);
+            teams.add(team);
+        }
         return teams;
     }
 
@@ -385,23 +385,23 @@ public class LoadDatabase {
 
 
 
-            updatedTeams = allTeams.stream().map( team ->
-            {
-                int projectCount = getRandomUpperBound(2) + 1;
-                for (int i = 0; i < projectCount;i++){
-                   Project randomProject = allProjects.get(getRandomUpperBound(allProjects.size()));
+        updatedTeams = allTeams.stream().map( team ->
+        {
+            int projectCount = getRandomUpperBound(2) + 1;
+            for (int i = 0; i < projectCount;i++){
+                Project randomProject = allProjects.get(getRandomUpperBound(allProjects.size()));
 
-                    if (team.getProjectList().contains(randomProject))
-                        continue;
-                    team.getProjectList().add(randomProject);
+                if (team.getProjectList().contains(randomProject))
+                    continue;
+                team.getProjectList().add(randomProject);
 
-                    randomProject.getTeamList().add(team);
+                randomProject.getTeamList().add(team);
 
-                }
+            }
 
-                return team; }).collect(Collectors.toList());
+            return team; }).collect(Collectors.toList());
 
-           }
+    }
 
     private static void MatchProjectWithTeams(List<Team> allTeams, List<Project> allProjects) {
 
@@ -424,7 +424,7 @@ public class LoadDatabase {
 
             return project; }).collect(Collectors.toList());
 
-        }
+    }
 
     private void updateTeamsAndProjects(){
         teamRepository.saveAll(updatedTeams);
