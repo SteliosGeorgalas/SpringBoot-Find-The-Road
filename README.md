@@ -113,10 +113,21 @@ submitting, or to update existing data.
 
 You may now use the blue button generated now to clear the database entirely.
 
+You can also navigate to:
+
+localhost:8080/v2/api-docs
+
+localhost:8080/v3/api-docs
+
+localhost:8080/swagger-ui/
+
+to check the swagger API documentation.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the Apache 2.0 license.
