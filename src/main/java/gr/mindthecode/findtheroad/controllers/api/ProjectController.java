@@ -30,13 +30,13 @@ public class ProjectController {
         return repository.findAll();
     }
 
-    @GetMapping("/api/project/{id}")
+    @GetMapping("/api/projects/{id}")
     Project getProject(@PathVariable("id") String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cannot find project with id " + id));
     }
 
-    @PutMapping(value = "/api/project/{id}", consumes = "application/json")
+    @PutMapping(value = "/api/projects/{id}", consumes = "application/json")
     Project updateProject(@RequestBody Project newProject, @PathVariable String id) {
 
         return repository.findById(id)
@@ -53,12 +53,12 @@ public class ProjectController {
                 });
     }
 
-    @DeleteMapping("/api/project")
+    @DeleteMapping("/api/projects")
     void deleteAllProjects() {
         repository.deleteAll();
     }
 
-    @DeleteMapping("/api/project/{id}")
+    @DeleteMapping("/api/projects/{id}")
     void deleteProject(@PathVariable String id) {
         repository.deleteById(id);
     }
