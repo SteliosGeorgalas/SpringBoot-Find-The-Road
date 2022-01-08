@@ -128,7 +128,7 @@ to check the swagger API documentation.
 
 The mongodb database is stored inside the project's directory. If you're using Linux and try to stop the app and re-run
 it, you will come across a build error. That's because when mongodb is generated, the permissions to modify the files
-under that directory are not available to you. To fix it, you should
+under that directory are not available to you. To fix it, you should:
 
 ```sh
 cd ~/IdeaProjects/SpringBoot-Find-The-Road/ && sudo rm -rf mongodb
