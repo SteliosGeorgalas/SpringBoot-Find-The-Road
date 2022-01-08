@@ -278,7 +278,7 @@ public class LoadDatabase {
 
     private  List<Project> generateRandomProjectsForEachCustomer(Customer customer) {
         Lorem lorem = LoremIpsum.getInstance();
-        int projectCount = getRandomUpperBound(3);
+        int projectCount = getRandomUpperBound(2);
 
         List<Project> projects = new ArrayList<>();
         for (int i = 0; i <= projectCount; i++) {
@@ -317,7 +317,7 @@ public class LoadDatabase {
 
         for (Project  project: allProjects) {
             List<Comment> comments = new ArrayList<>();
-            int count = 5;//getRandomUpperBound(5) + 3;
+            int count = 3;//getRandomUpperBound(5) + 3;
             Lorem lorem = LoremIpsum.getInstance();
             for (int i = 0; i < count; i++) {
                 Comment comment = new Comment ();
@@ -346,7 +346,7 @@ public class LoadDatabase {
 
             List<Employee> employees = new ArrayList<>();
 
-            int count = getRandomUpperBound(5) + 3;
+            int count = getRandomUpperBound(2) + 3;
             for (int i = 0; i < count; i++) {
                 Employee employee = new Employee();
                 employee.setFirstName(personNames[getRandomUpperBound(personNames.length)]);
@@ -374,7 +374,7 @@ public class LoadDatabase {
     private static  List<Team> generateRandomTeams() {
             List<Team> teams = new ArrayList<>();
 
-            int count =getRandomUpperBound(5) + 3;
+            int count =getRandomUpperBound(2) + 3;
             for (int i = 0; i < count; i++) {
                 Team team = new Team();
                 team.setName(teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
