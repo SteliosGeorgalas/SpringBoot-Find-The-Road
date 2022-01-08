@@ -166,10 +166,14 @@ public class LoadDatabase {
         log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
         log.info("Connecting Projects with Comments");  projectRepository.saveAll(updatedProjects);
 
+       
+
         log.info("Connecting Teams with Projects");
-        updatedTeams.clear(); updatedProjects = projectRepository.findAll();
-        MatchTeamWithProjects(teamRepository.findAll(),updatedProjects);
-        MatchProjectWithTeams(updatedTeams,updatedProjects);
+        updatedTeams.clear(); updatedProjects.clear();
+        MatchTeamWithProjects(teamRepository.findAll(),projectRepository.findAll());
+        updateTeamsAndProjects();
+        updatedTeams.clear(); updatedProjects.clear();
+        MatchProjectWithTeams(teamRepository.findAll(),projectRepository.findAll());
         updateTeamsAndProjects();
 
         log.info("Database setup completed");
@@ -188,7 +192,7 @@ public class LoadDatabase {
 //
 //    }
     private static List<Customer> generateRandomCustomers() {
-        int count =  getRandomUpperBound(10) + 5;
+        int count = 2;// getRandomUpperBound() + 2;
 
         List<Customer> customers = new ArrayList<>();
 
@@ -332,9 +336,16 @@ public class LoadDatabase {
                         continue;
                     team.getProjectList().add(randomProject);
 
+
+
+                    if(updatedProjects.contains(randomProject))
+                        updatedProjects.remove(randomProject);
+
                     randomProject.getTeamList().add(team);
+                    updatedProjects.add(randomProject);
 
                 }
+
 
                 return team; }).collect(Collectors.toList());
 
@@ -354,9 +365,11 @@ public class LoadDatabase {
                     continue;
                 project.getTeamList().add(randomTeam);
 
-                if (!randomTeam.getProjectList().contains(project))
-                    randomTeam.getProjectList().add(project);
+                if(updatedTeams.contains(randomTeam))
+                    updatedTeams.remove(randomTeam);
 
+                randomTeam.getProjectList().add(project);
+                updatedTeams.add(randomTeam);
             }
 
             return project; }).collect(Collectors.toList());
@@ -364,8 +377,11 @@ public class LoadDatabase {
         }
 
     private void updateTeamsAndProjects(){
+
         teamRepository.saveAll(updatedTeams);
         projectRepository.saveAll(updatedProjects);
+        List<Team> finalTeams = teamRepository.findAll();
+        List<Project> finalProjects = projectRepository.findAll();
     }
 
     private static String getCommentDate() {
