@@ -98,9 +98,9 @@ password. Use "user" and "password" respectively.
 
 You should now be authorized to navigate the content of the application. Since the database starts empty, navigate using
 the navbar on the top to any of the tabs "Employees", "Teams",
-"Projects" and click the yellow button to load the database with random data.
+"Projects".
 
-You should now be redirected to the same page and should now see the entries from the database.
+You should now see the entries from the database.
 
 You can use the "Projects" tab to look up current projects and see the comments for each one, as well as the teams
 currently working on it.
@@ -111,12 +111,33 @@ working on.
 There are relevant action buttons in each of the tabs to insert new data by filling in the respective fields and
 submitting, or to update existing data.
 
-You may now use the blue button generated now to clear the database entirely.
+
+You can also navigate to:
+
+localhost:8080/v2/api-docs
+
+localhost:8080/v3/api-docs
+
+localhost:8080/swagger-ui/
+
+to check the swagger API documentation.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Known Issues
+
+The mongodb database is stored inside the project's directory. If you're using Linux and try to stop the app and re-run
+it, you will come across a build error. That's because when mongodb is generated, the permissions to modify the files
+under that directory are not available to you. To fix it, you should
+
+```sh
+cd ~/IdeaProjects/SpringBoot-Find-The-Road/ && sudo rm -rf mongodb
+```
+
+Then, build the application again.
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the Apache 2.0 license.
