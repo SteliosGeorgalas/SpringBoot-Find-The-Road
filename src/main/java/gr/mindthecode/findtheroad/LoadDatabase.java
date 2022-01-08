@@ -144,7 +144,6 @@ public class LoadDatabase {
     @Autowired
     CommentRepository commentRepository;
 
-
     @EventListener(ApplicationReadyEvent.class)
     public void restoreDatabase() {
         //delete data
@@ -168,22 +167,27 @@ public class LoadDatabase {
         log.info("Connecting Projects with Comments");  projectRepository.saveAll(updatedProjects);
 
         log.info("Connecting Teams with Projects");
-        updatedTeams.clear(); updatedProjects = projectRepository.findAll();
-        MatchTeamWithProjects(teamRepository.findAll(),updatedProjects);
-        MatchProjectWithTeams(updatedTeams,updatedProjects);
+        updatedTeams.clear(); updatedProjects.clear();
+        MatchTeamWithProjects(teamRepository.findAll(),projectRepository.findAll());
+        updateTeamsAndProjects();
+        updatedTeams.clear(); updatedProjects.clear();
+        MatchProjectWithTeams(teamRepository.findAll(),projectRepository.findAll());
         updateTeamsAndProjects();
 
         log.info("Database setup completed");
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void restoreDatabase() {
-//        //delete data
-//        log.info("Deleting Customers"); customerRepository.deleteAll();
-//        log.info("Deleting Projects");  projectRepository.deleteAll();
-//        log.info("Deleting Teams"); teamRepository.deleteAll();
-//        log.info("Deleting Employees"); employeeRepository.deleteAll();
-//        log.info("Deleting Comments"); commentRepository.deleteAll();
+    //    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDatabase() {
+//        log.info("Preloading Customers"); customerRepository.saveAll(generateRandomCustomers());
+//        log.info("Preloading Projects"); projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+//        log.info("Updating Customers "); customerRepository.saveAll(updatedCustomers);
+//        log.info("Preloading Teams"); teamRepository.saveAll(generateRandomTeams());
+//        log.info("Preloading Employees");  employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+//        log.info("Updating Teams");  teamRepository.saveAll(updatedTeams);
+//        log.info("Preloading Comments"); commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+//        log.info("Updating Projects");  projectRepository.saveAll(updatedProjects);
+//
 //    }
 
     public void fillDatabase() {
@@ -250,14 +254,14 @@ public class LoadDatabase {
     }
 
     private static List<Customer> generateRandomCustomers() {
-        int count = 1;
+        int count = 2;// getRandomUpperBound() + 2;
 
         List<Customer> customers = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             String name = personNames[getRandomUpperBound(personNames.length)];
             String lastName = personLastNames[getRandomUpperBound(personLastNames.length)];
-            int age = getRandomUpperBound(20) + 5;
+            int age = getRandomUpperBound(40) + 20;
             customers.add(
                     new Customer(
                             name,
@@ -368,16 +372,16 @@ public class LoadDatabase {
     }
 
     private static  List<Team> generateRandomTeams() {
-        List<Team> teams = new ArrayList<>();
+            List<Team> teams = new ArrayList<>();
 
-        int count =getRandomUpperBound(5) + 3;
-        for (int i = 0; i < count; i++) {
-            Team team = new Team();
-            team.setName(teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
-                    + " - " +
-                    teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)]);
-            teams.add(team);
-        }
+            int count =getRandomUpperBound(5) + 3;
+            for (int i = 0; i < count; i++) {
+                Team team = new Team();
+                team.setName(teamNamesAdjectives[getRandomUpperBound(teamNamesAdjectives.length)]
+                        + " - " +
+                        teamNamesNouns[getRandomUpperBound(teamNamesNouns.length)]);
+                teams.add(team);
+            }
         return teams;
     }
 
@@ -385,23 +389,30 @@ public class LoadDatabase {
 
 
 
-        updatedTeams = allTeams.stream().map( team ->
-        {
-            int projectCount = getRandomUpperBound(2) + 1;
-            for (int i = 0; i < projectCount;i++){
-                Project randomProject = allProjects.get(getRandomUpperBound(allProjects.size()));
+            updatedTeams = allTeams.stream().map( team ->
+            {
+                int projectCount = getRandomUpperBound(2) + 1;
+                for (int i = 0; i < projectCount;i++){
+                   Project randomProject = allProjects.get(getRandomUpperBound(allProjects.size()));
 
-                if (team.getProjectList().contains(randomProject))
-                    continue;
-                team.getProjectList().add(randomProject);
+                    if (team.getProjectList().contains(randomProject))
+                        continue;
+                    team.getProjectList().add(randomProject);
 
-                randomProject.getTeamList().add(team);
 
-            }
 
-            return team; }).collect(Collectors.toList());
+                    if(updatedProjects.contains(randomProject))
+                        updatedProjects.remove(randomProject);
 
-    }
+                    randomProject.getTeamList().add(team);
+                    updatedProjects.add(randomProject);
+
+                }
+
+
+                return team; }).collect(Collectors.toList());
+
+           }
 
     private static void MatchProjectWithTeams(List<Team> allTeams, List<Project> allProjects) {
 
@@ -417,18 +428,23 @@ public class LoadDatabase {
                     continue;
                 project.getTeamList().add(randomTeam);
 
-                if (!randomTeam.getProjectList().contains(project))
-                    randomTeam.getProjectList().add(project);
+                if(updatedTeams.contains(randomTeam))
+                    updatedTeams.remove(randomTeam);
 
+                randomTeam.getProjectList().add(project);
+                updatedTeams.add(randomTeam);
             }
 
             return project; }).collect(Collectors.toList());
 
-    }
+        }
 
     private void updateTeamsAndProjects(){
+
         teamRepository.saveAll(updatedTeams);
         projectRepository.saveAll(updatedProjects);
+        List<Team> finalTeams = teamRepository.findAll();
+        List<Project> finalProjects = projectRepository.findAll();
     }
 
     private static String getCommentDate() {
