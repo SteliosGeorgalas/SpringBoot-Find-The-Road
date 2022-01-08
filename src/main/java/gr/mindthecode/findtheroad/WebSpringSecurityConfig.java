@@ -12,9 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
+import java.util.UUID;
+
 @Configuration
 @EnableWebSecurity
 public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
+    String UUid = UUID.randomUUID().toString().replace("-", "");
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,8 +33,11 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
-//                .and()
-//                .rememberMe().key(UUID.randomUUID().toString())
+                .and()
+                .rememberMe()
+                .rememberMeParameter("remember_me")
+                .tokenValiditySeconds(7 * 24 * 60 * 60) // expiration time: 7 days
+                .key(UUid)
                 .and()
                 .logout()
                 .permitAll();
@@ -58,7 +64,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public SpringSecurityDialect springSecurityDialect(){
+    public SpringSecurityDialect springSecurityDialect() {
         return new SpringSecurityDialect();
     }
 
