@@ -353,6 +353,7 @@ public class LoadDatabase {
                 employee.setLastName(personLastNames[getRandomUpperBound(personLastNames.length)]);
                 employee.setAge(getRandomUpperBound(80) + 20);
                 employee.setRole(employeeRoles[getRandomUpperBound(employeeRoles.length)]);
+                employee.setAddress(addresses[getRandomUpperBound(addresses.length)] + " " + getRandomUpperBound(100));
                 employee.setEmail(getEmailFromName(employee.getFirstName(),employee.getLastName()));
                 employee.setPersonalPhoneNumber(("210" + getRandomUpperBound(60000000)));
 
