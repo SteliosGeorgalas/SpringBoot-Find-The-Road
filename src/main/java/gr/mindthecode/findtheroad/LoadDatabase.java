@@ -191,6 +191,35 @@ public class LoadDatabase {
         customerRepository.saveAll(generateRandomCustomers());
         log.info("Preloading Projects");
         projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
+        log.info("Connecting Customers with Projects");
+        customerRepository.saveAll(updatedCustomers);
+
+        log.info("Preloading Teams");
+        teamRepository.saveAll(generateRandomTeams());
+        log.info("Preloading Employees");
+        employeeRepository.saveAll(generateRandomEmployees(teamRepository.findAll()));
+        log.info("Connecting Teams with Employees");
+        teamRepository.saveAll(updatedTeams);
+
+        log.info("Preloading Comments");
+        commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
+        log.info("Connecting Projects with Comments");
+        projectRepository.saveAll(updatedProjects);
+
+        log.info("Connecting Teams with Projects");
+        updatedTeams.clear();
+        updatedProjects = projectRepository.findAll();
+        MatchTeamWithProjects(teamRepository.findAll(), updatedProjects);
+        MatchProjectWithTeams(updatedTeams, updatedProjects);
+        updateTeamsAndProjects();
+
+        log.info("Database setup completed");
+
+        /*
+        log.info("Preloading Customers");
+        customerRepository.saveAll(generateRandomCustomers());
+        log.info("Preloading Projects");
+        projectRepository.saveAll(generateRandomProjects(customerRepository.findAll()));
         log.info("Updating Customers ");
         customerRepository.saveAll(updatedCustomers);
         log.info("Preloading Teams");
@@ -203,6 +232,7 @@ public class LoadDatabase {
         commentRepository.saveAll(generateRandomComments(projectRepository.findAll()));
         log.info("Updating Projects");
         projectRepository.saveAll(updatedProjects);
+         */
     }
 
     public void clearDatabase() {
