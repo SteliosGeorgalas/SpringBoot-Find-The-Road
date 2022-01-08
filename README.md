@@ -1,3 +1,18 @@
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="src/main/resources/static/logo/FindTheRoad_logos_black.png" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">Find The Road </h3>
+
+  <p align="center">
+   A platform designed exclusively for organizations that seek complete control over their projects!
+    <br />
+  </p>
+</div>
+
 # Table of contents
 
 - [About The Project](#about-the-project)
@@ -26,12 +41,10 @@ overwhelming very quickly, so here's where Find the Road comes in!
 
 ### The Technologies
 
-
 #### Front-End:
 *JavaScript*, *HTML*,*CSS*
 
 #### Back-End:
-
 *Java 11*, *MongoDB*
 
 #### Build System:
@@ -47,7 +60,6 @@ overwhelming very quickly, so here's where Find the Road comes in!
 #### API documentation:
 
 *Swagger*
-
 
 We use Docker for containerization, and Docker-compose for deployment.
 
@@ -79,7 +91,6 @@ pull the latest mongodb image, so no need to install it manually.
 
 
 <!-- USAGE EXAMPLES -->
-
 ### Usage
 
 You may explore the application by navigating to localhost:8080 on your browser. You will be asked for username and
