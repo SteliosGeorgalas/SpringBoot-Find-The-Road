@@ -83,7 +83,8 @@ pull the latest mongodb image, so no need to install it manually.
    ```sh
    git clone https://github.com/SteliosGeorgalas/SpringBoot-Find-The-Road.git
    ```
-2. Run docker-compose.yml
+2. Run docker-compose.yml. (You will either have to set the configuration to run Maven goals "clean" then "package"
+, or you can do it yourself manually before running docker-compose-yml.)
 3. Once everything is set and the respective docker containers are online, you are good to go!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
