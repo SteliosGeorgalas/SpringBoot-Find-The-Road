@@ -42,7 +42,7 @@ overwhelming very quickly, so here's where Find the Road comes in!
 ### The Technologies
 
 #### Front-End:
-*JavaScript*, *HTML*,*CSS*
+*JavaScript*,  *JQuery*, *HTML*,*CSS*
 
 #### Back-End:
 *Java 11*, *MongoDB*
